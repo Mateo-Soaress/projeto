@@ -1,0 +1,29 @@
+
+.container-form {
+    margin: 100px auto;
+    width: 400px;
+    background: rgba(255,255,255,0.1);
+    padding: 20px;
+    border-radius: 15px;
+}
+
+input, select, button {
+    width: 90%;
+    padding: 10px;
+    margin: 8px;
+    border: none;
+    border-radius: 10px;
+}
+
+.botao-cadastrar {
+    transition: 0.5s;
+    background: #007bff;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.botao-cadastrar:hover {
+    transition: 0.5s;
+    background: #0056b3;
+}

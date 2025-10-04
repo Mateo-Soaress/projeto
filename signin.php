@@ -9,7 +9,10 @@ $registrado = $_GET['registrado'] ?? '';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/form.css">
+    <link rel="stylesheet" href="css/login.css">
     <title>MateoRonan - Sign-in</title>
 </head>
 <body>
@@ -25,7 +28,7 @@ $registrado = $_GET['registrado'] ?? '';
                     <p class="mensagem-erro">Preencha todos os campos.</p>
                 <?php elseif ($registrado === "true"): ?>
                     <p class="mensagem-sucesso">Usuário cadastrado com sucesso! 
-                        </br><a href="login.php">Ir para a página de Login</a>
+                        </br><a href="login.php" class="link-login">Ir para a página de Login</a>
                     </p>
                 <?php endif; ?>
 

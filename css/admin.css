@@ -1,0 +1,66 @@
+.container-topo {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    margin: auto;
+    max-width: 100%;
+    padding: 20px;
+}
+
+.link-cadastrar {
+    background-color: rgb(211, 255, 234);
+    padding: 5px;
+    margin: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    color: rgb(0, 88, 202);
+    border-radius: 10px;
+    border: 1px solid black;
+}
+
+.link-sair {
+    background-color: red;
+    padding: 5px;
+    margin: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    color: white;
+    border-radius: 10px;
+    border: 1px solid black;
+}
+
+table {
+    margin: 15px auto;
+    background: rgb(211, 248, 255);
+    color: black;
+    border-radius: 10px;
+}
+
+table th, table td {
+    padding: 10px;
+    border: 1px solid black;
+    margin-top: 5px;
+}
+
+h1 {
+    font-size: x-large;
+    font-weight: bold;
+    color: rgb(44, 0, 202);
+    margin-top: 20px;
+}
+
+h2 {
+    font-size: larger;
+    font-weight: bold;
+    color: rgb(3, 87, 156);
+    margin-top: 10px;
+}
+
+.logo-admin {
+    background-color: #f8f8f8ff;
+    width: 400px;
+}
+
+.ornamento {
+    width: 100px;
+}

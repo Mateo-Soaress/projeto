@@ -9,7 +9,10 @@ $erro = $_GET['erro'] ?? '';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/form.css">
+    <link rel="stylesheet" href="css/login.css">
     <title>MateoRonan - Login</title>
 </head>
 <body>
@@ -46,7 +49,7 @@ $erro = $_GET['erro'] ?? '';
                         
                         <input type="submit" class="botao-cadastrar" value="Entrar">
                     </form>
-                    <a href="signin.php">Registre-se</a>
+                    <a href="signin.php" class="link-registrar">Registre-se</a>
                 </div>           
             </section>
         <?php endif; ?>

@@ -1,0 +1,43 @@
+.container-topo {
+    margin-top: 25px;
+}
+
+.topo-direita {
+    height: 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.conteudo {
+    margin-top: 15px;
+}
+
+.link-admin, .link-login, .link-registrar {
+    color: rgb(127, 225, 255);
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.mensagem-erro {
+    color: #c0392b;
+    background: #fff0f0;
+    border: 1px solid #c0392b;
+    padding: 8px 12px;
+    border-radius: 6px;
+    margin: 12px 0;
+}
+
+.mensagem-erro.oculto, .mensagem-sucesso.oculto {
+    display: none;
+}
+
+.mensagem-sucesso {
+    color: #87c02b;
+    background: #fff0f0;
+    border: 1px solid #87c02b;
+    padding: 8px 12px;
+    border-radius: 6px;
+    margin: 12px 0;
+}
