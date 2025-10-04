@@ -1,6 +1,7 @@
 <?php
 session_start();
 $erro = $_GET['erro'] ?? '';
+$registrado = $_GET['registrado'] ?? '';
 ?>
 
 <!DOCTYPE html>
@@ -22,6 +23,10 @@ $erro = $_GET['erro'] ?? '';
                     <p class="mensagem-erro">Usuário já existente com este CPF.</p>
                 <?php elseif ($erro === "campos"): ?>
                     <p class="mensagem-erro">Preencha todos os campos.</p>
+                <?php elseif ($registrado === "true"): ?>
+                    <p class="mensagem-sucesso">Usuário cadastrado com sucesso! 
+                        </br><a href="login.php">Ir para a página de Login</a>
+                    </p>
                 <?php endif; ?>
 
                 <form action="registrar.php" method="post">
@@ -38,11 +43,18 @@ $erro = $_GET['erro'] ?? '';
     
 <script>
     window.addEventListener('DOMContentLoaded', function(){
-        var msg = document.querySelector('.mensagem-erro');
-        if (msg) {
+        var msg_erro = document.querySelector('.mensagem-erro');
+        if (msg_erro) {
             setTimeout(function(){
-                msg.classList.add('oculto');
+                msg_erro.classList.add('oculto');
             }, 5000);
+        }
+
+        var msg_sucesso = document.querySelector('.mensagem-sucesso');
+        if (msg_sucesso) {
+            setTimeout(function(){
+                msg_sucesso.classList.add('oculto');
+            }, 10000);
         }
     })
 </script>

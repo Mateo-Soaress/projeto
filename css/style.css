@@ -49,6 +49,15 @@ table th, table td {
     margin: 12px 0;
 }
 
-.mensagem-erro.oculto {
+.mensagem-erro.oculto, .mensagem-sucesso.oculto {
     display: none;
+}
+
+.mensagem-sucesso {
+    color: #87c02b;
+    background: #fff0f0;
+    border: 1px solid #87c02b;
+    padding: 8px 12px;
+    border-radius: 6px;
+    margin: 12px 0;
 }

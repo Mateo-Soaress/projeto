@@ -2,7 +2,7 @@
 $db_host = getenv('DB_HOST') ?: 'localhost';
 
 $pdo = new PDO(
-    'mysql:host=' . $db_host . ';dbname=mateo_store;charset=utf8mb4',
+    'mysql:host=' . $db_host . ';dbname=mateoronan_storedb;charset=utf8mb4',
     'root',
     '',
     [

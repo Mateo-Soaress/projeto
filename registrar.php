@@ -24,7 +24,7 @@ $repo = new UsuarioRepositorio($pdo);
 if (!$repo->buscarPorEmail($email) && !$repo->buscarPorCpf($cpf)) {
     $usuario = new Usuario(0, $nome, $email, $cpf, $senha);
     $repo->salvar($usuario);
-    header('Location: login.php');
+    header('Location: signin.php?registrado=true');
     exit;
 }
 
