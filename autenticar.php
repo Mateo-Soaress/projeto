@@ -1,5 +1,8 @@
 <?php
 session_start();
+require_once 'src/conexao-bd.php';
+require_once 'src/Repositorios/UsuarioRepositorio.php';
+require_once 'src/Modelos/Usuario.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     header('Location: login.php');
@@ -14,4 +17,14 @@ if ($email === '' || $senha === '') {
     exit;
 }
 
+$repo = new UsuarioRepositorio($pdo);
 
+if ($repo->autenticar($email, $senha)) {
+    session_regenerate_id(true);
+    $_SESSION['usuario'] = $email;
+    header('Location: admin.php');
+    exit;
+}
+
+header('Location: login.php?erro=credenciais');
+exit;

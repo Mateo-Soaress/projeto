@@ -2,7 +2,7 @@
 $host = "localhost";
 $user = "root";
 $pass = "";
-$db   = "mateo-store";
+$db   = "mateo_store";
 
 $conn = new mysqli($host, $user, $pass, $db);
 
