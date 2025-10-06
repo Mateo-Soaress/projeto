@@ -32,7 +32,7 @@ $registrado = $_GET['registrado'] ?? '';
                     </p>
                 <?php endif; ?>
 
-                <form action="registrar.php" method="post">
+                <form action="inserirUsuario.php" method="post">
                     <input type="text" name="nome" id="nome" placeholder="Nome" required>
                     <input type="email" name="email" id="email" placeholder="E-mail" required>
                     <input type="text" name="cpf" id="cpf" placeholder="CPF" required>

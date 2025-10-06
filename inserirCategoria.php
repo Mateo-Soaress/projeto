@@ -5,10 +5,26 @@
     require_once 'src/Modelos/Categoria.php';
 
     if ($_SERVER["REQUEST_METHOD"] !== "POST") {
-        header('Loction: cadastrar-categoria.php');
+        header('Location: cadastrar-categoria.php');
         exit;
     }
 
-    
+    $nome = trim($_POST['nome'] ?? '');
+
+    if ($nome === '') {
+        header('Location: cadastrar-categoria.php?erro=campos');
+        exit;
+    }
+
+    $repo = new CategoriaRepositorio($pdo);
+
+    if ($repo->buscarPorNome($nome)) {
+        header('Location: cadastrar-categoria.php?erro=nomeexistente');
+        exit;
+    }
+
+    $repo->salvar(new Categoria(0, $nome));
+    header('Location: admin.php');
+    exit;
 
 ?>

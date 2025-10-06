@@ -3,6 +3,9 @@ session_start();
 
 require_once 'src/conexao-bd.php';
 require_once 'src/Repositorios/ProdutoRepositorio.php';
+require_once 'src/Repositorios/CategoriaRepositorio.php';
+require_once 'src/Modelos/Produto.php';
+require_once 'src/Modelos/Categoria.php';
 
 if (!isset($_SESSION['usuario'])) {
     header("Location: login.php");
@@ -11,8 +14,6 @@ if (!isset($_SESSION['usuario'])) {
 $usuarioLogado = $_SESSION['usuario'];
 
 $repo = new ProdutoRepositorio($pdo);
-
-$produtos = $repo->listar();
 ?>
 
 <!DOCTYPE html>
@@ -48,13 +49,13 @@ $produtos = $repo->listar();
                 <tr>
                     <th>Código</th><th>Nome</th><th>Descrição</th><th>Preço</th><th>Categoria</th>
                 </tr>
-                <?php foreach ($produtos as $produto): ?>
-                <tr>
-                    <td><?= $produto['id'] ?></td>
-                    <td><?= $produto['nome'] ?></td>
-                    <td><?= $produto['descricao'] ?></td>
-                    <td><?= $produto['preco'] ?></td>
-                    <td><?= $produto['categoria'] ?></td>
+                <?php foreach ($repo->listar() as $produto): ?>
+                <tr> <?php $repoCategoria = new CategoriaRepositorio($pdo); ?>
+                    <td><?= $produto->getId() ?></td>
+                    <td><?= $produto->getNome() ?></td>
+                    <td><?= $produto->getDescricao() ?></td>
+                    <td><?= $produto->getPreco() ?></td>
+                    <td><?= $repoCategoria->buscarPorId($produto->getCategoriaId())->getNome() ?></td>
                 </tr>
                 <?php endforeach; ?>
             </table>

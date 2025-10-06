@@ -49,5 +49,25 @@
             $stmt->bindValue("senha", password_hash($usuario->getSenha(), PASSWORD_DEFAULT));
             $stmt->execute();
         }
+
+        public function atualizar(Usuario $usuario): void
+        {
+            $sql = "UPDATE usuarios SET nome = :nome, email = :email, cpf = :cpf, senha = :senha WHERE id = :id";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->bindValue("id", $usuario->getId());
+            $stmt->bindValue("nome", $usuario->getNome());
+            $stmt->bindValue("email", $usuario->getEmail());
+            $stmt->bindValue("cpf", $usuario->getCpf());
+            $stmt->bindValue("senha", password_hash($usuario->getSenha(), PASSWORD_DEFAULT));
+            $stmt->execute();
+        }
+
+        public function remover(Usuario $usuario): void
+        {
+            $sql = "DELETE FROM usuarios WHERE id = :id";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->bindValue("id", $usuario->getId());
+            $stmt->execute();
+        }
     }
 ?>
