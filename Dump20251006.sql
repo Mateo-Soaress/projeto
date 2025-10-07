@@ -26,7 +26,7 @@ CREATE TABLE `categorias` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(100) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -35,7 +35,7 @@ CREATE TABLE `categorias` (
 
 LOCK TABLES `categorias` WRITE;
 /*!40000 ALTER TABLE `categorias` DISABLE KEYS */;
-INSERT INTO `categorias` VALUES (1,'Computador'),(2,'Celular');
+INSERT INTO `categorias` VALUES (1,'Computador'),(2,'Celular'),(3,'Impressora'),(4,'Notebook'),(5,'Teclado');
 /*!40000 ALTER TABLE `categorias` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -55,7 +55,7 @@ CREATE TABLE `produtos` (
   PRIMARY KEY (`id`),
   KEY `categoria_id` (`categoria_id`),
   CONSTRAINT `produtos_ibfk_1` FOREIGN KEY (`categoria_id`) REFERENCES `categorias` (`id`) ON DELETE SET NULL
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -64,7 +64,7 @@ CREATE TABLE `produtos` (
 
 LOCK TABLES `produtos` WRITE;
 /*!40000 ALTER TABLE `produtos` DISABLE KEYS */;
-INSERT INTO `produtos` VALUES (1,'Samsung Galaxy A55','256GB, 8GB RAM, 120hz',2064.90,2);
+INSERT INTO `produtos` VALUES (1,'Samsung Galaxy A55','256GB, 8GB RAM, 120hz',2064.90,2),(2,'Samsung Galaxy Book 4','Inter Core i5-1335U, Windows 11 Home, 8GB, 256GB SSD',2999.00,4),(3,'HP Smart Tank 580-590 Series','2 USB, 1 Bluetooth low energy, 1 Wi-fi Direct',773.10,3),(6,'Redragon Zeus Pro','Gamer, RGB, Layout compacto, Preto',180.40,5);
 /*!40000 ALTER TABLE `produtos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -108,4 +108,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-10-06 18:55:47
+-- Dump completed on 2025-10-06 23:17:06

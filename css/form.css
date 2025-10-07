@@ -1,3 +1,10 @@
+input, select, button {
+    width: 90%;
+    padding: 10px;
+    margin: 8px;
+    border: none;
+    border-radius: 10px;
+}
 
 .container-form {
     margin: 100px auto;
@@ -5,14 +12,6 @@
     background: rgba(255,255,255,0.1);
     padding: 20px;
     border-radius: 15px;
-}
-
-input, select, button {
-    width: 90%;
-    padding: 10px;
-    margin: 8px;
-    border: none;
-    border-radius: 10px;
 }
 
 .botao-cadastrar {
@@ -26,4 +25,12 @@ input, select, button {
 .botao-cadastrar:hover {
     transition: 0.5s;
     background: #0056b3;
+}
+
+.botao-voltar {
+    background-color: darkorange;
+    color: white;
+    padding: 10px;
+    margin: 5px;
+    border-radius: 10px;
 }

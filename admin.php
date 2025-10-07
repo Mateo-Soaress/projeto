@@ -31,6 +31,7 @@ $repo = new ProdutoRepositorio($pdo);
         <section class="container-topo">
             <div class="topo-direita">
                 <p>Bem-vindo, <strong><?php echo htmlspecialchars($usuarioLogado); ?></strong></p>
+                <a href="logout.php" class="link-sair">Sair</a>
             </div>
             <div class="conteudo">
                 <h2>Painel Administrativo</h2>
@@ -44,18 +45,34 @@ $repo = new ProdutoRepositorio($pdo);
         <section class="container-table">            
             <a href="cadastrar-produto.php" class="link-cadastrar">Cadastrar Produto</a>
             <a href="cadastrar-categoria.php" class="link-cadastrar">Cadastrar Categoria</a>
-            <a href="logout.php" class="link-sair">Sair</a>
             <table border="1">
                 <tr>
-                    <th>Código</th><th>Nome</th><th>Descrição</th><th>Preço</th><th>Categoria</th>
+                    <th>Código</th>
+                    <th>Nome</th>
+                    <th>Descrição</th>
+                    <th>Preço</th>
+                    <th>Categoria</th>
+                    <th colspan=2>Ações</th>
                 </tr>
                 <?php foreach ($repo->listar() as $produto): ?>
                 <tr> <?php $repoCategoria = new CategoriaRepositorio($pdo); ?>
                     <td><?= $produto->getId() ?></td>
                     <td><?= $produto->getNome() ?></td>
                     <td><?= $produto->getDescricao() ?></td>
-                    <td><?= $produto->getPreco() ?></td>
+                    <td>R$<?= $produto->getPreco() ?></td>
                     <td><?= $repoCategoria->buscarPorId($produto->getCategoriaId())->getNome() ?></td>
+                    <td>
+                        <form action="editar-produto.php" method="POST">
+                            <input type="number" name="produtoId" id="produtoId" value="<?= htmlspecialchars($produto->getId(), ENT_QUOTES, 'UTF-8') ?>" class="id-box">
+                            <input type="submit" value="Editar" class="botao-editar">
+                        </form>
+                    </td>
+                    <td>
+                        <form action="excluirProduto.php" method="POST">
+                            <input type="number" name="produtoId" id="produtoId" value="<?= htmlspecialchars($produto->getId(), ENT_QUOTES, 'UTF-8') ?>" class="id-box">
+                            <input type="submit" value="Excluir" class="botao-excluir">
+                        </form>
+                    </td>
                 </tr>
                 <?php endforeach; ?>
             </table>

@@ -8,29 +8,27 @@ require_once 'src/Modelos/Produto.php';
 require_once 'src/Modelos/Categoria.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: cadastrar-produto.php');
+    header('Location: login.php');
     exit;
 }
 
 $repoCategoria = new CategoriaRepositorio($pdo);
 
+$id = $_POST['produtoId'] ?? 0;
 $nome = trim($_POST['nome'] ?? '');
 $descricao = trim($_POST['descricao'] ?? '');
 $preco = $_POST['preco'] ?? '';
 $categoria = $_POST['categoria'] ?? '';
 
-if ($nome === '' || $descricao === '' || $preco === '' || $categoria === '') {
-    header('Location: cadastrar-produto.php?erro=campos');
-    exit;
+if ($id === 0 ||$nome === '' || $descricao === '' || $preco === '' || $categoria === '') {
+    header('Location: editar-produto.php?erro=campos');
 }
 
 $categoriaId = $repoCategoria->buscarPorNome($categoria)->getId() ?? 0;
 
-
 $repoProduto = new ProdutoRepositorio($pdo);
 
-$repoProduto->salvar(new Produto(0, $nome, $descricao, (float)$preco, $categoriaId));
-header('Location: cadastrar-produto.php?cadastro=true');
+$repoProduto->atualizar(new Produto((int)$id, $nome, $descricao, (float)$preco, $categoriaId));
+header('Location: admin.php');
 exit;
-
 ?>

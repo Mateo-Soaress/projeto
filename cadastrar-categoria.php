@@ -8,6 +8,7 @@ if (!isset($_SESSION['usuario'])) {
 
 $usuarioLogado = $_SESSION['usuario'];
 $erro = $_GET['erro'] ?? '';
+$cadastro = $_GET['cadastro'];
 ?>
 
 <!DOCTYPE html>
@@ -22,23 +23,27 @@ $erro = $_GET['erro'] ?? '';
     <title>MateoRonan - Cadastro Categoria</title>
 </head>
 <body>
-    <section action="inserirCategoria" class="container-form">
-        <h2>Cadastro de Categoria</h2>
-        <div class="form-wrapper">
-            <?php if ($erro === 'campos'): ?>
-                <p class="mensagem-erro">Preencha o nome da categoria.</p>
-            <?php elseif ($erro === 'nomeexistente'): ?>
-                <p class="mensagem-erro">Categoria já cadastrada</p>
-            <?php endif; ?>
+    <main>
+        <section action="inserirCategoria" class="container-form">
+            <h2>Cadastro de Categoria</h2>
+            <div class="form-wrapper">
+                <?php if ($erro === 'campos'): ?>
+                    <p class="mensagem-erro">Preencha o nome da categoria.</p>
+                <?php elseif ($erro === 'nomeexistente'): ?>
+                    <p class="mensagem-erro">Categoria já cadastrada.</p>
+                <?php elseif ($cadastro === 'true'): ?>
+                    <p class="mensagem-sucesso">Categoria cadastrada com êxito.</p>
+                <?php endif; ?>
 
-            <form action="inserirCategoria.php"  method="POST">
-                <input type="text" name="nome" id="nome" placeholder="Nome da categoria" required>           
-                <button type="submit">Cadastrar</button>
-            </form>
+                <form action="inserirCategoria.php"  method="POST">
+                    <input type="text" name="nome" id="nome" placeholder="Nome da categoria" required>           
+                    <button type="submit">Cadastrar</button>
+                </form>
 
-            <a href="admin.php" class="botao-voltar">Voltar</a>
-        </div>        
-    </section>
+                <a href="admin.php" class="botao-voltar">Voltar</a>
+            </div>        
+        </section>
+    </main>
 
 <script>
     window.addEventListener('DOMContentLoaded', function(){
@@ -47,6 +52,13 @@ $erro = $_GET['erro'] ?? '';
             setTimeout(function(){
                 msg.classList.add('oculto');
             }, 5000);
+        }
+
+        var msg_sucesso = document.querySelector('.mensagem-sucesso');
+        if (msg_sucesso) {
+            setTimeout(function(){
+                msg_sucesso.classList.add('oculto');
+            }, 10000);
         }
     })
 </script>

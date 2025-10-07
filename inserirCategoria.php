@@ -24,7 +24,7 @@
     }
 
     $repo->salvar(new Categoria(0, $nome));
-    header('Location: admin.php');
+    header('Location: cadastrar-categoria.php?cadastro=true');
     exit;
 
 ?>
