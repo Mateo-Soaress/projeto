@@ -6,6 +6,10 @@ input, select, button {
     border-radius: 10px;
 }
 
+h2 {
+    font-size: large;
+}
+
 .container-form {
     margin: 100px auto;
     width: 400px;
@@ -14,12 +18,22 @@ input, select, button {
     border-radius: 15px;
 }
 
-.botao-cadastrar {
+.botao-cadastrar, .botao-editar {
     transition: 0.5s;
     background: #007bff;
     color: white;
     font-weight: bold;
     cursor: pointer;
+}
+
+.botao-editar {
+    background-color: #ff7300;
+    margin-bottom: 25px;
+}
+
+.botao-editar:hover {
+    transition: 0.5s;
+    background-color: #ce5d00;
 }
 
 .botao-cadastrar:hover {
@@ -28,9 +42,14 @@ input, select, button {
 }
 
 .botao-voltar {
+    transition: 0.5s;
     background-color: darkorange;
     color: white;
     padding: 10px;
-    margin: 5px;
     border-radius: 10px;
+}
+
+.botao-voltar:hover {
+    transition: 0.5s;
+    background-color: #d67600;
 }

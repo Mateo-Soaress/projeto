@@ -8,7 +8,7 @@ if (!isset($_SESSION['usuario'])) {
 
 $usuarioLogado = $_SESSION['usuario'];
 $erro = $_GET['erro'] ?? '';
-$cadastro = $_GET['cadastro'];
+$cadastro = $_GET['cadastro'] ?? '';
 ?>
 
 <!DOCTYPE html>

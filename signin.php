@@ -17,6 +17,9 @@ $registrado = $_GET['registrado'] ?? '';
 </head>
 <body>
     <main>
+        <section class="container-banner">
+            <img src="img/loja-banner.png" alt="Banner da Loja" class="logo-banner">
+        </section>
         <section class="container-form">
             <h2>Registre-se</h2>
             <div class="form-wrapper">
@@ -40,7 +43,8 @@ $registrado = $_GET['registrado'] ?? '';
 
                     <input type="submit" class="botao-cadastrar" value="Registrar">
                 </form>
-            </div>
+                <a href="login.php" class="link-registrar">Vá para a página de Login</a>
+            </div>            
         </section>
     </main>
     

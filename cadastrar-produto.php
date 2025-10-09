@@ -31,7 +31,7 @@ $repo = new CategoriaRepositorio($pdo);
 </head>
 <body>
     <main>
-        <div class="container-form">
+        <section class="container-form">
             <h2>Cadastro de Produto</h2>
             <div class="form-wrapper">
                 <?php if ($erro === 'campos'): ?>
@@ -49,12 +49,12 @@ $repo = new CategoriaRepositorio($pdo);
                             <option value="<?= htmlspecialchars($categoria->getNome(), ENT_QUOTES, 'UTF-8'); ?>"><?= htmlspecialchars($categoria->getNome()); ?></option>
                         <?php endforeach; ?>
                     </select>
-                    <button type="submit">Cadastrar</button>
+                    <button type="submit" class="botao-cadastrar">Cadastrar</button>
                 </form>
 
                 <a href="admin.php" class="botao-voltar">Voltar</a>
             </div>
-        </div>
+        </section>
     </main>
 </body>
 </html>

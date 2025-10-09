@@ -24,21 +24,22 @@ $repo = new ProdutoRepositorio($pdo);
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/index.css">
     <link rel="stylesheet" href="css/admin.css">
+    <link rel="icon" href="img/loja-logo.png">
     <title>MateoRonan - Admin</title>
 </head>
 <body>
     <main>
         <section class="container-topo">
             <div class="topo-direita">
-                <p>Bem-vindo, <strong><?php echo htmlspecialchars($usuarioLogado); ?></strong></p>
                 <a href="logout.php" class="link-sair">Sair</a>
+                <p>Bem-vindo, <strong><?php echo htmlspecialchars($usuarioLogado); ?></strong></p>
             </div>
             <div class="conteudo">
                 <h2>Painel Administrativo</h2>
             </div>
         </section>
-        <section class="container-admin-banner">
-            <img src="img/loja-banner.png" alt="Logo da Loja" class="logo-admin">
+        <section class="container-banner">
+            <img src="img/loja-banner.png" alt="Banner da Loja da Loja" class="logo-banner">
             <h1>Administração de Produtos</h1>
             <img src="img/ornamento-informatica.png" alt="Ornamento" class="ornamento">
         </section>
@@ -46,7 +47,7 @@ $repo = new ProdutoRepositorio($pdo);
             <a href="cadastrar-produto.php" class="link-cadastrar">Cadastrar Produto</a>
             <a href="cadastrar-categoria.php" class="link-cadastrar">Cadastrar Categoria</a>
             <table border="1">
-                <tr>
+                <tr class="header-row">
                     <th>Código</th>
                     <th>Nome</th>
                     <th>Descrição</th>

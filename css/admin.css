@@ -25,6 +25,11 @@ h2 {
     margin-top: 10px;
 }
 
+.header-row {
+    background-color: rgb(135, 235, 255);
+    font-weight: bold;
+}
+
 .container-topo {
     display: flex;
     flex-direction: column;
@@ -34,42 +39,45 @@ h2 {
     padding: 20px;
 }
 
-.link-cadastrar {
-    background-color: green;
-    padding: 5px;
-    margin: 5px;
-    text-decoration: none;
-    font-weight: bold;
-    color: white;
-    border-radius: 10px;
-    border: 1px solid black;
+.container-topo p {
+    margin-top: 25px;
 }
 
-.link-sair, .botao-excluir {
+.link-sair, .botao-excluir, .botao-editar, .link-cadastrar {
+    transition: 0.5s;
     background-color: red;
-    padding: 5px;
+    padding: 8px;
     margin: 5px;
     text-decoration: none;
     font-weight: bold;
+    font-size: 15px;
     color: white;
     border-radius: 10px;
     border: 1px solid black;
+    cursor: pointer;
+}
+
+.link-sair:hover, .botao-excluir:hover {
+    transition: 0.5s;
+    background-color: #bb0000;
+}
+
+.link-cadastrar {
+    background-color: green;
+}
+
+.link-cadastrar:hover {
+    transition: 0.5s;
+    background-color: darkgreen;
 }
 
 .botao-editar {
     background-color: orange;
-    padding: 5px;
-    margin: 5px;
-    text-decoration: none;
-    font-weight: bold;
-    color: white;
-    border-radius: 10px;
-    border: 1px solid black;
 }
 
-.logo-admin {
-    background-color: #f8f8f8ff;
-    width: 400px;
+.botao-editar:hover {
+    transition: 0.5s;
+    background-color: #e09200;
 }
 
 .ornamento {

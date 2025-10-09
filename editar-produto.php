@@ -54,7 +54,7 @@ $produto = $repoProduto->buscarPorId($produtoId);
                             </option>
                         <?php endforeach; ?>
                     </select>
-                    <button type="submit">Editar</button>
+                    <button type="submit" class="botao-editar">Editar</button>
                 </form>
                 <a href="admin.php" class="botao-voltar">Voltar</a>
             </div>

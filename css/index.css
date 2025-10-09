@@ -1,8 +1,13 @@
 body {
     background: linear-gradient(90deg, #0052a3, #00aaff);
-    font-family: Arial, sans-serif;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif, Courier, monospace;
     color: white;
     text-align: center;
+}
+
+.logo-banner {
+    background-color: #f8f8f8ff;
+    width: 400px;
 }
 
 .id-box {

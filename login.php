@@ -34,6 +34,9 @@ $erro = $_GET['erro'] ?? '';
             </section>
 
         <?php else : ?>
+            <section class="container-banner">
+                <img src="img/loja-banner.png" alt="Banner da Loja" class="logo-banner">
+            </section>
             <section class="container-form">
                 <h2>Login</h2>
                 <div class="form-wrapper">
