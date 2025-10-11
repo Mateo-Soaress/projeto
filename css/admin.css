@@ -14,7 +14,7 @@ table th, table td {
 h1 {
     font-size: x-large;
     font-weight: bold;
-    color: rgb(44, 0, 202);
+    color: #2c00ca;
     margin-top: 20px;
 }
 
@@ -26,7 +26,8 @@ h2 {
 }
 
 .header-row {
-    background-color: rgb(135, 235, 255);
+    background-color: #2c00ca;
+    color: white;
     font-weight: bold;
 }
 
