@@ -13,6 +13,7 @@ $registrado = $_GET['registrado'] ?? '';
     <link rel="stylesheet" href="css/index.css">
     <link rel="stylesheet" href="css/form.css">
     <link rel="stylesheet" href="css/login.css">
+    <link rel="icon" href="img/loja-logo.png">
     <title>MateoRonan - Sign-in</title>
 </head>
 <body>

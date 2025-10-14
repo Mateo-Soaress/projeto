@@ -31,6 +31,7 @@ $produto = $repoProduto->buscarPorId($produtoId);
     <link rel="stylesheet" href="css/index.css">
     <link rel="stylesheet" href="css/login.css">
     <link rel="stylesheet" href="css/form.css">
+    <link rel="icon" href="img/loja-logo.png">
     <title>MateoRonan - Editar Produto</title>
 </head>
 <body>
