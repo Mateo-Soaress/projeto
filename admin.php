@@ -26,7 +26,7 @@ $repo = new ProdutoRepositorio($pdo);
     <link rel="stylesheet" href="css/admin.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech&display=swap" rel="stylesheet">
     <link rel="icon" href="img/loja-logo.png">
     <title>MateoRonan - Admin</title>
 </head>
@@ -47,8 +47,6 @@ $repo = new ProdutoRepositorio($pdo);
             <img src="img/ornamento-informatica.png" alt="Ornamento" class="ornamento">
         </section>
         <section class="container-table">            
-            <a href="cadastrar-produto.php" class="link-cadastrar">Cadastrar Produto</a>
-            <a href="cadastrar-categoria.php" class="link-cadastrar">Cadastrar Categoria</a>
             <table border="1">
                 <tr class="header-row">
                     <th>Código</th>
@@ -80,6 +78,8 @@ $repo = new ProdutoRepositorio($pdo);
                 </tr>
                 <?php endforeach; ?>
             </table>
+            <a href="cadastrar-produto.php" class="link-cadastrar">Cadastrar Produto</a>
+            <a href="cadastrar-categoria.php" class="link-cadastrar">Cadastrar Categoria</a>
         </section>
     </main>
 </body>

@@ -1,7 +1,7 @@
 body {
     background: linear-gradient(90deg, #0052a3, #00aaff);
-    font-family: "Merryweather", sans-serif;
-    color: white;
+    font-family: "Share Tech", sans-serif;
+    color: #e0faff;
     text-align: center;
 }
 
@@ -33,7 +33,7 @@ body {
 }
 
 .logo-banner {
-    background-color: #f8f8f8ff;
+    background-color: #d9d9d9;
     width: 400px;
 }
 
