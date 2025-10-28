@@ -13,7 +13,7 @@ h2 {
 .container-form {
     margin: 100px auto;
     width: 400px;
-    background: rgba(255,255,255,0.1);
+    background: #ffffff1a;
     padding: 20px;
     border-radius: 15px;
 }
@@ -43,13 +43,14 @@ h2 {
 
 .botao-voltar {
     transition: 0.5s;
-    background-color: darkorange;
-    color: white;
+    background-color: #d9d9d9;
+    color: #000000;
+    text-decoration: none;
     padding: 10px;
     border-radius: 10px;
 }
 
 .botao-voltar:hover {
     transition: 0.5s;
-    background-color: #d67600;
+    background-color: #bbbbbb;
 }

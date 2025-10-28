@@ -38,7 +38,7 @@ $cadastro = $_GET['cadastro'] ?? '';
 
                 <form action="inserirCategoria.php"  method="POST">
                     <input type="text" name="nome" id="nome" placeholder="Nome da categoria" required>           
-                    <button type="submit">Cadastrar</button>
+                    <button type="submit" class="botao-cadastrar">Cadastrar</button>
                 </form>
 
                 <a href="admin.php" class="botao-voltar">Voltar</a>

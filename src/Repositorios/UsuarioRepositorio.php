@@ -12,6 +12,14 @@
         {
             return new Usuario($dados['id'], $dados['nome'], $dados['email'], $dados['cpf'], $dados['senha']);
         }
+        public function buscarPorId(int $id): ?Usuario {
+            $sql = "SELECT id, nome, email, cpf, senha FROM usuarios WHERE id = :id";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->bindValue(":id", $id);
+            $stmt->execute();
+            $dados = $stmt->fetch();
+            return $dados ? $this->formarObjeto($dados): null;
+        }
 
         public function buscarPorCpf(string $cpf): ?Usuario
         {

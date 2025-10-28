@@ -61,16 +61,16 @@ h2 {
 }
 
 .link-cadastrar {
-    background-color: green;
+    background-color: #1e90ff;
 }
 
 .link-cadastrar:hover {
     transition: 0.5s;
-    background-color: darkgreen;
+    background-color: #1773ce;
 }
 
 .botao-editar {
-    background-color: orange;
+    background-color: #ffa500;
 }
 
 .botao-editar:hover {
