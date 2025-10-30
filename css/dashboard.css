@@ -1,0 +1,25 @@
+.menu {
+    background-color: #d9d9d9;    
+    width: 400px;
+    margin: auto;
+    border: 2px solid black;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.menu a {
+    color: #000000;
+    text-decoration: none;
+}
+
+.item-menu {
+    transition: 0.1s;
+    width: 100px;
+    padding: 10px;
+}
+
+.item-menu:hover {
+    transition: 0.1s;
+    border: 2px dashed black;
+}

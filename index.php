@@ -21,7 +21,7 @@
 
             <div class="perfil-box">
                 <a href="editarPerfil"><img src="img/perfil.png" alt="Imagem do Perfil"></a>
-                <p>Minha Conta</p>
+                <p>Perfil</p>
             </div>
         </section>
         <section class="container-produtos">

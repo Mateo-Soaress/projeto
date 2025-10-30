@@ -40,12 +40,12 @@ if ($id) {
 
 $nome = $modoEdicao ? $usuario->getNome() : '';
 $email = $modoEdicao ? $usuario->getEmail() : '';
+$cpf = $modoEdicao ? $usuario->getCpf() : '';
 $senha = $modoEdicao ? $usuario->getSenha() : '';
 
-$tituloPagina = $modoEdicao ? 'Editar Perfil' : 'Sign-in';
+$tituloPagina = $modoEdicao ? 'Perfil' : 'Sign-in';
 $textoBotao = $modoEdicao ? 'Salvar' : 'Registrar';
 
-$erro = $_GET['erro'] ?? '';
 $registrado = $_GET['registrado'] ?? '';
 ?>
 
@@ -59,7 +59,7 @@ $registrado = $_GET['registrado'] ?? '';
     <link rel="stylesheet" href="css/form.css">
     <link rel="stylesheet" href="css/login.css">
     <link rel="icon" href="img/loja-logo.png">
-    <title>MateoRonan - Sign-in</title>
+    <title>MateoRonan - <?= htmlspecialchars($tituloPagina)?></title>
 </head>
 <body>
     <main>
@@ -67,29 +67,44 @@ $registrado = $_GET['registrado'] ?? '';
             <img src="img/loja-banner.png" alt="Banner da Loja" class="logo-banner">
         </section>
         <section class="container-form">
-            <h2>Registre-se</h2>
+            <h2><?= htmlspecialchars($tituloPagina) ?></h2>
             <div class="form-wrapper">
-                <?php if ($erro === "emailexistente"): ?>
-                    <p class="mensagem-erro">Usuário já existente com este e-mail.</p>
-                <?php elseif ($erro === "cpfexistente"): ?>
-                    <p class="mensagem-erro">Usuário já existente com este CPF.</p>
-                <?php elseif ($erro === "campos"): ?>
-                    <p class="mensagem-erro">Preencha todos os campos.</p>
-                <?php elseif ($registrado === "true"): ?>
-                    <p class="mensagem-sucesso">Usuário cadastrado com sucesso! 
-                        </br><a href="login.php" class="link-login">Ir para a página de Login</a>
-                    </p>
+                <?php if (isset($_GET['erro'])): ?>
+                    <?php if ($_GET['erro'] === "emailexistente"): ?>
+                        <p class="mensagem-erro">Usuário já existente com este e-mail.</p>
+                    <?php elseif ($_GET['erro'] === "cpfexistente"): ?>
+                        <p class="mensagem-erro">Usuário já existente com este CPF.</p>
+                    <?php elseif ($_GET['erro'] === "campos"): ?>
+                        <p class="mensagem-erro">Preencha todos os campos.</p>
+                    <?php endif; ?>
+                <?php endif; ?>
+                <?php if (isset($_GET['registrado'])): ?>
+                    <?php if ($_GET['registrado'] === "true"): ?>
+                        <p class="mensagem-sucesso">Usuário cadastrado com sucesso! 
+                            <?php if (!$modoEdicao): ?>
+                                </br><a href="login.php" class="link-login">Ir para a página de Login</a>
+                            <?php endif; ?>
+                        </p>
+                    <?php endif; ?>
                 <?php endif; ?>
 
-                <form action="inserirUsuario.php" method="post">
-                    <input type="text" name="nome" id="nome" placeholder="Nome" required>
-                    <input type="email" name="email" id="email" placeholder="E-mail" required>
-                    <input type="text" name="cpf" id="cpf" placeholder="CPF" required>
-                    <input type="password" name="senha" id="senha" placeholder="Senha" required>
+                <form action="../inserirUsuario.php" method="post">
+                    <?php if ($modoEdicao): ?>
+                        <input type="hidden" name="id" value="<?= (int)$usuario->getId() ?>">
+                    <?php endif; ?>
 
-                    <input type="submit" class="botao-cadastrar" value="Registrar">
+                    <input type="text" name="nome" id="nome" placeholder="Nome" value="<?= htmlspecialchars($nome) ?>" required>
+                    <input type="email" name="email" id="email" placeholder="E-mail" value="<?= htmlspecialchars($email) ?>" required>
+                    <input type="text" name="cpf" id="cpf" placeholder="CPF" value="<?= htmlspecialchars($cpf) ?>" required>
+                    <input type="password" name="senha" id="senha" placeholder="Senha" value="<?= htmlspecialchars($senha) ?>" required>
+
+
+                    <input type="submit" class="botao-cadastrar" value="<?= htmlspecialchars($textoBotao) ?>">
                 </form>
-                <a href="login.php" class="link-registrar">Vá para a página de Login</a>
+
+                <?php if ($modoEdicao): ?>
+                    <a href="login.php" class="link-registrar">Vá para a página de Login</a>
+                <?php endif; ?>
             </div>            
         </section>
     </main>
