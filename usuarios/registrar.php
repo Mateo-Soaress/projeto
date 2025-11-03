@@ -9,17 +9,17 @@ $registrado = $_GET['registrado'] ?? '';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/reset.css">
-    <link rel="stylesheet" href="css/index.css">
-    <link rel="stylesheet" href="css/form.css">
-    <link rel="stylesheet" href="css/login.css">
-    <link rel="icon" href="img/loja-logo.png">
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/form.css">
+    <link rel="stylesheet" href="../css/login.css">
+    <link rel="icon" href="../img/loja-logo.png">
     <title>MateoRonan - Sign-in</title>
 </head>
 <body>
     <main>
         <section class="container-banner">
-            <img src="img/loja-banner.png" alt="Banner da Loja" class="logo-banner">
+            <img src="../img/loja-banner.png" alt="Banner da Loja" class="logo-banner">
         </section>
         <section class="container-form">
             <h2>Registre-se</h2>
@@ -36,7 +36,7 @@ $registrado = $_GET['registrado'] ?? '';
                     </p>
                 <?php endif; ?>
 
-                <form action="inserirUsuario.php" method="post">
+                <form action="salvarRegistro.php" method="post">
                     <input type="text" name="nome" id="nome" placeholder="Nome" required>
                     <input type="email" name="email" id="email" placeholder="E-mail" required>
                     <input type="text" name="cpf" id="cpf" placeholder="CPF" required>
@@ -44,7 +44,7 @@ $registrado = $_GET['registrado'] ?? '';
 
                     <input type="submit" class="botao-cadastrar" value="Registrar">
                 </form>
-                <a href="login.php" class="link-registrar">Vá para a página de Login</a>
+                <a href="../login.php" class="link-registrar">Voltar à página de Login</a>
             </div>            
         </section>
     </main>

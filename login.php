@@ -1,6 +1,7 @@
 <?php
 session_start();
 $usuarioLogado = $_SESSION['usuario'] ?? null;
+$registrado = $_GET['registrado'] ?? '';
 $erro = $_GET['erro'] ?? '';
 ?>
 
@@ -30,7 +31,7 @@ $erro = $_GET['erro'] ?? '';
                     </form>
                 </div>
                 <div class="conteudo">
-                    <a href="admin.php" class="link-admin">Ir para Painel Administrativo</a>
+                    <a href="dashboard.php" class="link-admin">Ir para Painel Administrativo</a>
                 </div>
             </section>
 
@@ -45,6 +46,8 @@ $erro = $_GET['erro'] ?? '';
                         <p class="mensagem-erro">Email ou senha incorretos.</p>
                     <?php elseif ($erro === 'campos') : ?>
                         <p class="mensagem-erro">Preencha email e senha.</p>
+                    <?php elseif ($registrado === "true"): ?>
+                        <p class="mensagem-sucesso">Usuário cadastrado com sucesso. Faça o login.</p>                
                     <?php endif; ?>
 
                     <form action="autenticar.php" method="post">
@@ -53,7 +56,7 @@ $erro = $_GET['erro'] ?? '';
                         
                         <input type="submit" class="botao-cadastrar" value="Entrar">
                     </form>
-                    <a href="signin.php" class="link-registrar">Registre-se</a>
+                    <a href="usuarios/registrar.php" class="link-registrar">Registre-se</a>
                 </div>           
             </section>
         <?php endif; ?>
@@ -66,6 +69,13 @@ $erro = $_GET['erro'] ?? '';
             setTimeout(function(){
                 msg.classList.add('oculto');
             }, 5000);
+        }
+
+        var msg_sucesso = document.querySelector('.mensagem-sucesso');
+        if (msg_sucesso) {
+            setTimeout(function(){
+                msg_sucesso.classList.add('oculto');
+            }, 10000);
         }
     })
 </script>

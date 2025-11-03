@@ -1,3 +1,20 @@
+<?php
+session_start();
+if (!isset($_SESSION['usuario'])) {
+    header('Location: login.php');
+}
+
+$usuarioLogado = $_SESSION['usuario'];
+
+if (!$usuarioLogado) {
+    header('Location: login.php');
+}
+
+function pode(string $perm) {
+    return in_array($perm, $_SESSION['permissoes'] ?? [], true);
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,14 +31,13 @@
 </head>
 <body>
     <main>
-        <section class="container-header">
-            <img class="logo-loja" src="img/loja-logo-sem-fundo.png" alt="Logo da Loja MateoRonan">            
-
-            <h1>Dashboard</h1>
-
-            <div class="perfil-box">
-                <a href="editarPerfil"><img src="img/perfil.png" alt="Imagem do Perfil"></a>
-                <p>Perfil</p>
+        <section class="container-topo">
+            <div class="topo-direita">
+                <a href="logout.php" class="link-sair">Sair</a>
+                <p>Bem-vindo, <strong><?php echo htmlspecialchars($usuarioLogado); ?></strong></p>
+            </div>
+            <div class="conteudo">
+                <h2>Painel Administrativo</h2>
             </div>
         </section>
 
@@ -41,7 +57,9 @@
         </section>
 
         <section class="container-banner">
-           <img src="img/loja-banner.png" alt="Banner da Loja" class="logo-banner">
+            <img src="img/loja-banner.png" alt="Banner da Loja da Loja" class="logo-banner">
+            <h1>Dashboard</h1>
+            <img src="img/ornamento-informatica.png" alt="Ornamento" class="ornamento">
         </section>
     </main>
 </body>

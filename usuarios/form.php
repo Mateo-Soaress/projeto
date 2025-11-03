@@ -54,17 +54,17 @@ $registrado = $_GET['registrado'] ?? '';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/reset.css">
-    <link rel="stylesheet" href="css/index.css">
-    <link rel="stylesheet" href="css/form.css">
-    <link rel="stylesheet" href="css/login.css">
-    <link rel="icon" href="img/loja-logo.png">
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/form.css">
+    <link rel="stylesheet" href="../css/login.css">
+    <link rel="icon" href="../img/loja-logo.png">
     <title>MateoRonan - <?= htmlspecialchars($tituloPagina)?></title>
 </head>
 <body>
     <main>
         <section class="container-banner">
-            <img src="img/loja-banner.png" alt="Banner da Loja" class="logo-banner">
+            <img src="../img/loja-banner.png" alt="Banner da Loja" class="logo-banner">
         </section>
         <section class="container-form">
             <h2><?= htmlspecialchars($tituloPagina) ?></h2>
@@ -77,18 +77,9 @@ $registrado = $_GET['registrado'] ?? '';
                     <?php elseif ($_GET['erro'] === "campos"): ?>
                         <p class="mensagem-erro">Preencha todos os campos.</p>
                     <?php endif; ?>
-                <?php endif; ?>
-                <?php if (isset($_GET['registrado'])): ?>
-                    <?php if ($_GET['registrado'] === "true"): ?>
-                        <p class="mensagem-sucesso">Usuário cadastrado com sucesso! 
-                            <?php if (!$modoEdicao): ?>
-                                </br><a href="login.php" class="link-login">Ir para a página de Login</a>
-                            <?php endif; ?>
-                        </p>
-                    <?php endif; ?>
-                <?php endif; ?>
+                <?php endif; ?>                
 
-                <form action="../inserirUsuario.php" method="post">
+                <form action="salvar.php" method="post">
                     <?php if ($modoEdicao): ?>
                         <input type="hidden" name="id" value="<?= (int)$usuario->getId() ?>">
                     <?php endif; ?>
@@ -98,13 +89,12 @@ $registrado = $_GET['registrado'] ?? '';
                     <input type="text" name="cpf" id="cpf" placeholder="CPF" value="<?= htmlspecialchars($cpf) ?>" required>
                     <input type="password" name="senha" id="senha" placeholder="Senha" value="<?= htmlspecialchars($senha) ?>" required>
 
-
                     <input type="submit" class="botao-cadastrar" value="<?= htmlspecialchars($textoBotao) ?>">
                 </form>
 
-                <?php if ($modoEdicao): ?>
-                    <a href="login.php" class="link-registrar">Vá para a página de Login</a>
-                <?php endif; ?>
+                
+                <a href="listar.php" class="botao-voltar">Voltar</a>
+                
             </div>            
         </section>
     </main>
@@ -116,13 +106,6 @@ $registrado = $_GET['registrado'] ?? '';
             setTimeout(function(){
                 msg_erro.classList.add('oculto');
             }, 5000);
-        }
-
-        var msg_sucesso = document.querySelector('.mensagem-sucesso');
-        if (msg_sucesso) {
-            setTimeout(function(){
-                msg_sucesso.classList.add('oculto');
-            }, 10000);
         }
     })
 </script>

@@ -70,6 +70,12 @@
             $stmt->execute();
         }
 
+        public function listar(): array {
+            $sql = "SELECT  id, nome, email, cpf, senha FROM usuarios ORDER BY id";
+            $rs = $this->pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
+            return array_map(fn($r) => $this->formarObjeto($r), $rs);
+        }
+
         public function remover(Usuario $usuario): void
         {
             $sql = "DELETE FROM usuarios WHERE id = :id";

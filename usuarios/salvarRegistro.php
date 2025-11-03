@@ -1,8 +1,8 @@
 <?php
     session_start();
-    require_once 'src/conexao-bd.php';
-    require_once 'src/Repositorios/UsuarioRepositorio.php';
-    require_once 'src/Modelos/Usuario.php';
+    require_once __DIR__ . '/../src/conexao-bd.php';
+    require_once __DIR__ . '/../src/Repositorios/UsuarioRepositorio.php';
+    require_once __DIR__ . '/../src/Modelos/Usuario.php';
 
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
         header('Location: login.php');
@@ -33,7 +33,7 @@
 
     $usuario = new Usuario(0, $nome, $email, $cpf, $senha);
     $repo->salvar($usuario);
-    header('Location: signin.php?registrado=true');
+    header('Location: ../login.php?registrado=true');
     exit;
 
 ?>

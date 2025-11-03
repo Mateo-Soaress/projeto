@@ -22,7 +22,7 @@ $repo = new UsuarioRepositorio($pdo);
 if ($repo->autenticar($email, $senha)) {
     session_regenerate_id(true);
     $_SESSION['usuario'] = $email;
-    header('Location: admin.php');
+    header('Location: dashboard.php');
     exit;
 }
 
