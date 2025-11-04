@@ -48,6 +48,7 @@ $produto = $repoProduto->buscarPorId($produtoId);
                     <input type="text" name="descricao" id="descricao" placeholder="Descrição do produto" value="<?= htmlspecialchars($produto->getDescricao(), ENT_QUOTES, 'UTF-8'); ?>">
                     <input type="number" step="0.01" name="preco" id="preco" placeholder="Preço do produto" value="<?= htmlspecialchars($produto->getPreco(), ENT_QUOTES, 'UTF-8'); ?>" required>
                     <select name="categoria" id="categoria" required>
+                        <option value="">Escolha uma categoria</option>
                         <?php foreach($repoCategoria->listar() as $categoria): ?>
                             <option value="<?= htmlspecialchars($categoria->getNome(), ENT_QUOTES, 'UTF-8'); ?>"
                             <?php if ($categoria->getId() === $produto->getCategoriaId()): ?> selected <?php endif; ?>>

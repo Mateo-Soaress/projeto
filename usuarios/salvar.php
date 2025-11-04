@@ -20,17 +20,7 @@
         exit;
     }
 
-    $repo = new UsuarioRepositorio($pdo);
-
-    if ($repo->buscarPorCpf($cpf)) {
-        header('Location: form.php' . ($id ? '?id=' . $id . '&erro=campos' : '?erro=cpfexistente'));
-        exit;
-    }
-
-    if ($repo->buscarPorEmail($email)) {
-        header('Location: form.php' . ($id ? '?id=' . $id . '&erro=campos' : '?erro=emailexistente'));
-        exit;
-    }
+    $repo = new UsuarioRepositorio($pdo);    
 
     if ($id) {
         $existente = $repo->buscarPorId($id);
@@ -53,11 +43,21 @@
         exit;
     }
     else {
-        $usuario = new Usuario(0, $nome, $email, $cpf, $senha);
-        $repo->salvar($usuario);
-        header('Location: listar.php');
+        if ($repo->buscarPorCpf($cpf)) {
+        header('Location: form.php' . ($id ? '?id=' . $id . '&erro=cpfexistente' : '?erro=cpfexistente'));
         exit;
-    }
+        }
+
+        if ($repo->buscarPorEmail($email)) {
+            header('Location: form.php' . ($id ? '?id=' . $id . '&erro=emailexistente' : '?erro=emailexistente'));
+            exit;
+        }
+
+            $usuario = new Usuario(0, $nome, $email, $cpf, $senha);
+            $repo->salvar($usuario);
+            header('Location: listar.php');
+            exit;
+        }
 
     $usuario = new Usuario(0, $nome, $email, $cpf, $senha);
     $repo->salvar($usuario);
