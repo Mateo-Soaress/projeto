@@ -16,6 +16,10 @@ if (!$usuarioLogado) {
     header('Location: login.php');
 }
 
+function pode(string $perm) {
+    return in_array($perm, $_SESSION['permissoes'] ?? [], true);
+}
+
 $usuarioRepositorio = new UsuarioRepositorio($pdo);
 $usuarios = $usuarioRepositorio->listar();
 ?>
@@ -54,9 +58,11 @@ $usuarios = $usuarioRepositorio->listar();
             <div class="item-menu">
                 <a href="produtos/listar.php">Produtos</a>
             </div>
-            <div class="item-menu">
-                <a href="usuarios/listar.php">Usuários</a>
-            </div>
+            <?php if (pode('usuarios.listar')): ?>
+                <div class="item-menu">
+                    <a href="usuarios/listar.php">Usuários</a>
+                </div>
+            <?php endif; ?>
             <div class="item-menu">
                 <a href="categorias/listar.php">Categorias</a>
             </div>      
@@ -75,7 +81,7 @@ $usuarios = $usuarioRepositorio->listar();
                     <th>Nome</th>
                     <th>Email</th>
                     <th>Cpf</th>
-                    <th>Senha</th>
+                    <th>Perfil</th>
                     <th colspan=2>Ações</th>
                 </tr>
                 <?php foreach ($usuarios as $usuario): ?>
@@ -84,7 +90,7 @@ $usuarios = $usuarioRepositorio->listar();
                         <td><?= $usuario->getNome() ?></td>
                         <td><?= $usuario->getEmail() ?></td>
                         <td><?= $usuario->getCpf() ?></td>
-                        <td><?= $usuario->getSenha() ?></td>                    
+                        <td><?= $usuario->getPerfil() ?></td>
                         <td>
                             <form action="form.php?id=<?= $usuario->getId() ?>" method="POST">                            
                                 <input type="submit" value="Editar" class="botao-editar">

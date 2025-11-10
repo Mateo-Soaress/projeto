@@ -24,9 +24,9 @@ function pode(string $perm) {
     <link rel="stylesheet" href="css/index.css">
     <link rel="stylesheet" href="css/admin.css">
     <link rel="stylesheet" href="css/dashboard.css">
-     <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Share+Tech&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Saira:ital,wght@0,100..900;1,100..900&family=Sawarabi+Mincho&family=Sirivennela&display=swap" rel="stylesheet">
     <title>MateoRonan - Dashboard</title>
 </head>
 <body>
@@ -48,9 +48,11 @@ function pode(string $perm) {
             <div class="item-menu">
                 <a href="produtos/listar.php">Produtos</a>
             </div>
-            <div class="item-menu">
-                <a href="usuarios/listar.php">Usuários</a>
-            </div>
+            <?php if (pode('usuarios.listar')): ?>
+                <div class="item-menu">
+                    <a href="usuarios/listar.php">Usuários</a>
+                </div>
+            <?php endif; ?>
             <div class="item-menu">
                 <a href="categorias/listar.php">Categorias</a>
             </div>            

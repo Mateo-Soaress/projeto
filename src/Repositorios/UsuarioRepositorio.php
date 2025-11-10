@@ -10,10 +10,10 @@
 
         public function formarObjeto(array $dados): Usuario
         {
-            return new Usuario($dados['id'], $dados['nome'], $dados['email'], $dados['cpf'], $dados['senha']);
+            return new Usuario($dados['id'], $dados['nome'], $dados['email'], $dados['cpf'], $dados['perfil'], $dados['senha']);
         }
         public function buscarPorId(int $id): ?Usuario {
-            $sql = "SELECT id, nome, email, cpf, senha FROM usuarios WHERE id = :id";
+            $sql = "SELECT id, nome, email, cpf, perfil, senha FROM usuarios WHERE id = :id";
             $stmt = $this->pdo->prepare($sql);
             $stmt->bindValue(":id", $id);
             $stmt->execute();
@@ -23,7 +23,7 @@
 
         public function buscarPorCpf(string $cpf): ?Usuario
         {
-            $sql = "SELECT id, nome, email, cpf, senha FROM usuarios WHERE cpf = :cpf";
+            $sql = "SELECT id, nome, email, cpf, perfil, senha FROM usuarios WHERE cpf = :cpf";
             $stmt = $this->pdo->prepare($sql);
             $stmt->bindValue(":cpf", $cpf);
             $stmt->execute();
@@ -33,7 +33,7 @@
 
         public function buscarPorEmail(string $email): ?Usuario
         {
-            $sql = "SELECT id, nome, email, cpf, senha FROM usuarios WHERE email = :email";
+            $sql = "SELECT id, nome, email, cpf, perfil, senha FROM usuarios WHERE email = :email";
             $stmt = $this->pdo->prepare($sql);
             $stmt->bindValue(":email", $email);
             $stmt->execute();
@@ -49,29 +49,31 @@
 
         public function salvar(Usuario $usuario): void
         {
-            $sql = "INSERT INTO usuarios (nome, email, cpf, senha) VALUES (:nome, :email, :cpf, :senha)";
+            $sql = "INSERT INTO usuarios (nome, email, cpf, perfil, senha) VALUES (:nome, :email, :cpf, :perfil, :senha)";
             $stmt = $this->pdo->prepare($sql);
             $stmt->bindValue("nome", $usuario->getNome());
             $stmt->bindValue("email", $usuario->getEmail());
             $stmt->bindValue("cpf", $usuario->getCpf());
+            $stmt->bindValue("perfil", $usuario->getPerfil());
             $stmt->bindValue("senha", password_hash($usuario->getSenha(), PASSWORD_DEFAULT));
             $stmt->execute();
         }
 
         public function atualizar(Usuario $usuario): void
         {
-            $sql = "UPDATE usuarios SET nome = :nome, email = :email, cpf = :cpf, senha = :senha WHERE id = :id";
+            $sql = "UPDATE usuarios SET nome = :nome, email = :email, cpf = :cpf, perfil = :perfil, senha = :senha WHERE id = :id";
             $stmt = $this->pdo->prepare($sql);
             $stmt->bindValue("id", $usuario->getId());
             $stmt->bindValue("nome", $usuario->getNome());
             $stmt->bindValue("email", $usuario->getEmail());
             $stmt->bindValue("cpf", $usuario->getCpf());
+            $stmt->bindValue("perfil", $usuario->getPerfil());
             $stmt->bindValue("senha", password_hash($usuario->getSenha(), PASSWORD_DEFAULT));
             $stmt->execute();
         }
 
         public function listar(): array {
-            $sql = "SELECT  id, nome, email, cpf, senha FROM usuarios ORDER BY id";
+            $sql = "SELECT  id, nome, email, cpf, perfil, senha FROM usuarios ORDER BY id";
             $rs = $this->pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
             return array_map(fn($r) => $this->formarObjeto($r), $rs);
         }

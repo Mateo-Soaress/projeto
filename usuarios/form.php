@@ -41,6 +41,7 @@ if ($id) {
 $nome = $modoEdicao ? $usuario->getNome() : '';
 $email = $modoEdicao ? $usuario->getEmail() : '';
 $cpf = $modoEdicao ? $usuario->getCpf() : '';
+$perfil = $modoEdicao ? $usuario->getPerfil() : 'User';
 $senha = $modoEdicao ? $usuario->getSenha() : '';
 
 $tituloPagina = $modoEdicao ? 'Perfil' : 'Sign-in';
@@ -87,6 +88,12 @@ $registrado = $_GET['registrado'] ?? '';
                     <input type="text" name="nome" id="nome" placeholder="Nome" value="<?= htmlspecialchars($nome) ?>" required>
                     <input type="email" name="email" id="email" placeholder="E-mail" value="<?= htmlspecialchars($email) ?>" required>
                     <input type="text" name="cpf" id="cpf" placeholder="CPF" value="<?= htmlspecialchars($cpf) ?>" required>
+                    
+                    <select id="perfil">
+                        <option value="User" <?= $perfil === 'User' ? 'selected' : '' ?>>User</option>
+                        <option value="Admin" <?= $perfil === 'Admin' ? 'selected' : '' ?>>Admin</option>
+                    </select>
+
                     <input type="password" name="senha" id="senha" placeholder="Senha" value="<?= htmlspecialchars($senha) ?>" required>
 
                     <input type="submit" class="botao-cadastrar" value="<?= htmlspecialchars($textoBotao) ?>">

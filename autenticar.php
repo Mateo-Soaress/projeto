@@ -18,10 +18,13 @@ if ($email === '' || $senha === '') {
 }
 
 $repo = new UsuarioRepositorio($pdo);
+$usuario = $repo->buscarPorEmail($email);
 
 if ($repo->autenticar($email, $senha)) {
     session_regenerate_id(true);
+    $perfil = $usuario->getPerfil();
     $_SESSION['usuario'] = $email;
+    $_SESSION['permissoes'] = $perfil === 'Admin' ? ['usuarios.listar', 'produtos.listar', 'categorias.listar'] : ['produtos.listar', 'categorias.listar'];
     header('Location: dashboard.php');
     exit;
 }
