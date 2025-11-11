@@ -13,6 +13,7 @@
     $nome = trim($_POST['nome'] ?? '');
     $email = trim($_POST['email'] ?? '');
     $cpf = $_POST['cpf'] ?? '';
+    $perfil = $_POST['perfil'] ?? 'User';
     $senha = $_POST['senha'] ?? '';
 
     if ($nome === '' || $email === '' || $cpf === '' || $senha === '') {
@@ -37,7 +38,7 @@
             $senhaParaObjeto = $senha;
         }
 
-        $usuario = new Usuario($id, $nome, $email, $cpf, $senha);
+        $usuario = new Usuario($id, $nome, $email, $cpf, $perfil, $senha);
         $repo->atualizar($usuario);
         header('Location: listar.php');
         exit;
@@ -53,13 +54,13 @@
             exit;
         }
 
-            $usuario = new Usuario(0, $nome, $email, $cpf, $senha);
+            $usuario = new Usuario(0, $nome, $email, $cpf, $perfil, $senha);
             $repo->salvar($usuario);
             header('Location: listar.php');
             exit;
         }
 
-    $usuario = new Usuario(0, $nome, $email, $cpf, $senha);
+    $usuario = new Usuario(0, $nome, $email, $cpf, $perfil, $senha);
     $repo->salvar($usuario);
     header('Location: listar.php');
     exit;

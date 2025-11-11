@@ -85,5 +85,12 @@
             $stmt->bindValue("id", $usuario->getId());
             $stmt->execute();
         }
+
+        public function contarTotal(): int {
+            $sql = "SELECT COUNT(*) FROM usuarios";
+            $stmt = $this->pdo->query($sql);
+            $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
+            return (int) $resultado['total'];
+        }
     }
 ?>
