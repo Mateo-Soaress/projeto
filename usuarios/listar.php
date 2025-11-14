@@ -2,8 +2,6 @@
 session_start();
 if (!isset($_SESSION['usuario'])) {
     header('Location: login.php');
-
-
 }
 
 require_once __DIR__ . "/../src/conexao-bd.php";
@@ -16,12 +14,35 @@ if (!$usuarioLogado) {
     header('Location: login.php');
 }
 
+$usuarioRepositorio = new UsuarioRepositorio($pdo);
+
+$itens_por_pagina = filter_input(INPUT_GET, 'itens_por_pagina', FILTER_VALIDATE_INT) ?: 5;
+$pagina_atual = isset($_GET['pagina']) ? max(1, (int)$_GET['pagina']) : 1;
+$offset = ($pagina_atual - 1) * $itens_por_pagina;
+
+$total_usuarios = $usuarioRepositorio->contarTotal();
+$total_paginas = ceil($total_usuarios / $itens_por_pagina);
+
+$ordem = filter_input(INPUT_GET, 'ordem') ?: null;
+$direcao = filter_input(INPUT_GET, 'direcao') ?: 'ASC';
+
+$usuarios = $usuarioRepositorio->buscarPaginado($itens_por_pagina, $offset, $ordem, $direcao);
+
+function gerarUrlOrdenacao($campo, $paginaAtual, $ordemAtual, $direcaoAtual, $itensPorPagina) {
+    $novaDirecao = ($ordemAtual === $campo && $direcaoAtual === 'ASC') ? 'DESC' : 'ASC';
+    return "?pagina={$paginaAtual}&ordem={$campo}&direcao={$novaDirecao}&itens_por_pagina={$itensPorPagina}";
+}
+
+function mostrarIconeOrdenacao($campo, $ordemAtual, $direcaoAtual) {
+    if ($ordemAtual !== $campo) {
+        return '&#8661';
+    }
+    return $direcaoAtual === 'ASC' ? '⇑' : '⇓';
+}
+
 function pode(string $perm) {
     return in_array($perm, $_SESSION['permissoes'] ?? [], true);
 }
-
-$usuarioRepositorio = new UsuarioRepositorio($pdo);
-$usuarios = $usuarioRepositorio->listar();
 ?>
 
 <!DOCTYPE html>
@@ -70,17 +91,42 @@ $usuarios = $usuarioRepositorio->listar();
 
         <section class="container-banner">
             <img src="../img/loja-banner.png" alt="Banner da Loja da Loja" class="logo-banner">
-            <h1>Dashboard</h1>
+            <h1>Lista de Usuários</h1>
             <img src="../img/ornamento-informatica.png" alt="Ornamento" class="ornamento">
         </section>
+
+        <form action="" method="GET" class="form-paginacao">
+            <label for="itens_por_pagina">Itens por página: </label>
+            <select name="itens_por_pagina" id="itens_por_pagina" onchange="this.form.submit()">
+                <option value="5" <?= $itens_por_pagina == 5 ? 'selected' : '' ?>>5</option>
+                <option value="10" <?= $itens_por_pagina == 10 ? 'selected' : '' ?>>10</option>
+                <option value="20" <?= $itens_por_pagina == 20 ? 'selected' : '' ?>>20</option>
+            </select>
+        </form>
 
         <section class="container-table">            
             <table border="1">
                 <tr class="header-row">
-                    <th>Código</th>
-                    <th>Nome</th>
-                    <th>Email</th>
-                    <th>Cpf</th>
+                    <th>
+                        <a href="<?= gerarUrlOrdenacao('id', $pagina_atual, $ordem, $direcao, $itens_por_pagina) ?>" style="color: inherit; text-decoration: none;">
+                            Código <?= mostrarIconeOrdenacao('id', $ordem, $direcao) ?>
+                        </a>
+                    </th>
+                    <th>
+                        <a href="<?= gerarUrlOrdenacao('nome', $pagina_atual, $ordem, $direcao, $itens_por_pagina) ?>" style="color: inherit; text-decoration: none;">
+                            Nome <?= mostrarIconeOrdenacao('nome', $ordem, $direcao) ?>
+                        </a>
+                    </th>
+                    <th>
+                        <a href="<?= gerarUrlOrdenacao('email', $pagina_atual, $ordem, $direcao, $itens_por_pagina) ?>" style="color: inherit; text-decoration: none;">
+                            Email <?= mostrarIconeOrdenacao('email', $ordem, $direcao) ?>
+                        </a>
+                    </th>
+                    <th>
+                        <a href="<?= gerarUrlOrdenacao('cpf', $pagina_atual, $ordem, $direcao, $itens_por_pagina) ?>" style="color: inherit; text-decoration: none;">
+                            Cpf <?= mostrarIconeOrdenacao('cpf', $ordem, $direcao) ?>
+                        </a>
+                    </th>
                     <th>Perfil</th>
                     <th colspan=2>Ações</th>
                 </tr>
@@ -105,6 +151,27 @@ $usuarios = $usuarioRepositorio->listar();
                     </tr>
                 <?php endforeach; ?>
             </table>
+
+            <div class="paginacao">
+                <?php if ($total_paginas > 1): ?>
+                    <?php if ($pagina_atual > 1): ?>
+                        <a href="?pagina=<?=$pagina_atual - 1?>&ordem=<?=htmlspecialchars($ordem)?>&direcao=<?=htmlspecialchars($direcao)?>$itens_por_pagina=<?=htmlspecialchars($itens_por_pagina)?>">Anterior</a>
+                    <?php endif; ?>
+
+                    <?php for ($i = 1; $i <= $total_paginas; $i++): ?>
+                        <?php if ($i === $pagina_atual): ?>
+                            <strong><?= $i ?></strong>
+                        <?php else: ?>
+                            <a href="?pagina=<?=$i?>&ordem=<?=htmlspecialchars($ordem)?>&direcao=<?=htmlspecialchars($direcao)?>$itens_por_pagina=<?=htmlspecialchars($itens_por_pagina)?>"><?= $i ?></a>
+                        <?php endif; ?>
+                    <?php endfor; ?>
+
+                    <?php if ($pagina_atual < $total_paginas): ?>
+                        <a href="?pagina=<?=$pagina_atual + 1?>&ordem=<?=htmlspecialchars($ordem)?>&direcao=<?=htmlspecialchars($direcao)?>$itens_por_pagina=<?=htmlspecialchars($itens_por_pagina)?>">Próximo</a>
+                    <?php endif; ?>
+                <?php endif; ?>
+            </div>
+
             <a href="form.php" class="link-cadastrar">Cadastrar Usuário</a>            
         </section>
     </main>

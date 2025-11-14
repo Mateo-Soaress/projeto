@@ -57,11 +57,12 @@ h2 {
 
 .link-sair:hover, .botao-excluir:hover {
     transition: 0.5s;
-    background-color: #bb0000;
+    background-color: #bb0000;    
 }
 
 .link-cadastrar {
     background-color: #1e90ff;
+    margin-top: 15px;
 }
 
 .link-cadastrar:hover {
@@ -70,12 +71,12 @@ h2 {
 }
 
 .botao-editar {
-    background-color: #ffa500;
+    background-color: #ffa53f;
 }
 
 .botao-editar:hover {
     transition: 0.5s;
-    background-color: #e09200;
+    background-color: rgb(235, 152, 0);
 }
 
 .ornamento {

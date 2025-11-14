@@ -41,6 +41,34 @@
             return $dados ? $this->formarObjeto($dados): null;
         }
 
+        public function buscarPaginado(int $limite, int $offset, ?string $ordem = null, ?string $direcao = 'ASC'): array 
+        {
+            $colunasPermitidas = ['id', 'nome', 'email', 'cpf'];
+
+            $sql = "SELECT * FROM usuarios";
+
+            if ($ordem !== null && in_array(strtolower($ordem), $colunasPermitidas)) {
+                $direcao = strtoupper($direcao) == 'DESC' ? 'DESC' : 'ASC';
+                $sql .= " ORDER BY {$ordem} {$direcao}";
+            }
+
+            $sql .= " LIMIT ? OFFSET ?";
+
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->bindValue(1, $limite, PDO::PARAM_INT);
+            $stmt->bindValue(2, $offset, PDO::PARAM_INT);
+            $stmt->execute();
+
+            $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $listaUsuarios = [];
+
+            foreach ($usuarios as $usuario) {
+                $listaUsuarios[] = $this->formarObjeto($usuario);
+            }
+
+            return $listaUsuarios;
+        }
+
         public function autenticar(string $email, string $senha): bool
         {
             $usuario = $this->buscarPorEmail($email);
@@ -87,7 +115,7 @@
         }
 
         public function contarTotal(): int {
-            $sql = "SELECT COUNT(*) FROM usuarios";
+            $sql = "SELECT COUNT(*) AS total FROM usuarios";
             $stmt = $this->pdo->query($sql);
             $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
             return (int) $resultado['total'];
