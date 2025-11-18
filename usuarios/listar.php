@@ -172,7 +172,10 @@ function pode(string $perm) {
                 <?php endif; ?>
             </div>
 
-            <a href="form.php" class="link-cadastrar">Cadastrar Usuário</a>            
+            <a href="form.php" class="link-cadastrar">Cadastrar Usuário</a>
+            <form action="gerador-pdf.php">
+                <button type="submit" class="link-cadastrar">Baixar relatório</button>
+            </form>       
         </section>
     </main>
 </body>
