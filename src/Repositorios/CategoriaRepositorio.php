@@ -12,6 +12,34 @@
             return new Categoria($dados['id'], $dados['nome']);
         }
 
+        public function buscarPaginado(int $limite, int $offset, ?string $ordem = null, ?string $direcao = 'ASC'): array 
+        {
+            $colunasPermitidas = ['categoria'];
+
+            $sql = "SELECT * FROM categorias";
+
+            if ($ordem !== null && in_array(strtolower($ordem), $colunasPermitidas)) {
+                $direcao = strtoupper($direcao) == 'DESC' ? 'DESC' : 'ASC';
+                $sql .= " ORDER BY {$ordem} {$direcao}";
+            }
+
+            $sql .= " LIMIT ? OFFSET ?";
+
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->bindValue(1, $limite, PDO::PARAM_INT);
+            $stmt->bindValue(2, $offset, PDO::PARAM_INT);
+            $stmt->execute();
+
+            $categorias = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $listaCategorias = [];
+
+            foreach ($categorias as $categoria) {
+                $listaCategorias[] = $this->formarObjeto($categoria);
+            }
+
+            return $listaCategorias;
+        }
+
         public function listarObjetos(array $dados): array 
         {
             foreach ($dados as $dado) {
@@ -76,6 +104,13 @@
             $stmt = $this->pdo->prepare($sql);
             $stmt->bindValue("id", $categoria->getId());
             $stmt->execute();
+        }
+
+        public function contarTotal(): int {
+            $sql = "SELECT COUNT(*) AS total FROM categorias";
+            $stmt = $this->pdo->query($sql);
+            $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
+            return (int) $resultado['total'];
         }
     }
 ?>

@@ -45,8 +45,8 @@
     }
     else {
         if ($repo->buscarPorCpf($cpf)) {
-        header('Location: form.php' . ($id ? '?id=' . $id . '&erro=cpfexistente' : '?erro=cpfexistente'));
-        exit;
+            header('Location: form.php' . ($id ? '?id=' . $id . '&erro=cpfexistente' : '?erro=cpfexistente'));
+            exit;
         }
 
         if ($repo->buscarPorEmail($email)) {
@@ -54,11 +54,11 @@
             exit;
         }
 
-            $usuario = new Usuario(0, $nome, $email, $cpf, $perfil, $senha);
-            $repo->salvar($usuario);
-            header('Location: listar.php');
-            exit;
-        }
+        $usuario = new Usuario(0, $nome, $email, $cpf, $perfil, $senha);
+        $repo->salvar($usuario);
+        header('Location: listar.php');
+        exit;
+    }
 
     $usuario = new Usuario(0, $nome, $email, $cpf, $perfil, $senha);
     $repo->salvar($usuario);

@@ -5,28 +5,28 @@ if (!isset($_SESSION['usuario'])) {
 }
 
 require_once __DIR__ . "/../src/conexao-bd.php";
-require_once __DIR__ . "/../src/Modelos/Usuario.php";
-require_once __DIR__ . "/../src/Repositorios/UsuarioRepositorio.php";
+require_once __DIR__ . "/../src/Modelos/Categoria.php";
+require_once __DIR__ . "/../src/Repositorios/CategoriaRepositorio.php";
 
-$usuarioLogado = $_SESSION['usuario'];
+$categoriaLogado = $_SESSION['usuario'];
 
-if (!$usuarioLogado) {
+if (!$categoriaLogado) {
     header('Location: login.php');
 }
 
-$usuarioRepositorio = new UsuarioRepositorio($pdo);
+$categoriaRepositorio = new CategoriaRepositorio($pdo);
 
 $itens_por_pagina = filter_input(INPUT_GET, 'itens_por_pagina', FILTER_VALIDATE_INT) ?: 5;
 $pagina_atual = isset($_GET['pagina']) ? max(1, (int)$_GET['pagina']) : 1;
 $offset = ($pagina_atual - 1) * $itens_por_pagina;
 
-$total_usuarios = $usuarioRepositorio->contarTotal();
-$total_paginas = ceil($total_usuarios / $itens_por_pagina);
+$total_categorias = $categoriaRepositorio->contarTotal();
+$total_paginas = ceil($total_categorias / $itens_por_pagina);
 
 $ordem = filter_input(INPUT_GET, 'ordem') ?: null;
 $direcao = filter_input(INPUT_GET, 'direcao') ?: 'ASC';
 
-$usuarios = $usuarioRepositorio->buscarPaginado($itens_por_pagina, $offset, $ordem, $direcao);
+$categorias = $categoriaRepositorio->buscarPaginado($itens_por_pagina, $offset, $ordem, $direcao);
 
 function gerarUrlOrdenacao($campo, $paginaAtual, $ordemAtual, $direcaoAtual, $itensPorPagina) {
     $novaDirecao = ($ordemAtual === $campo && $direcaoAtual === 'ASC') ? 'DESC' : 'ASC';
@@ -65,7 +65,7 @@ function pode(string $perm) {
         <section class="container-topo">
             <div class="topo-direita">
                 <a href="../logout.php" class="link-sair">Sair</a>
-                <p>Bem-vindo, <strong><?php echo htmlspecialchars($usuarioLogado); ?></strong></p>
+                <p>Bem-vindo, <strong><?php echo htmlspecialchars($categoriaLogado); ?></strong></p>
             </div>
             <div class="conteudo">
                 <h2>Painel Administrativo</h2>
@@ -91,7 +91,7 @@ function pode(string $perm) {
 
         <section class="container-banner">
             <img src="../img/loja-banner.png" alt="Banner da Loja da Loja" class="logo-banner">
-            <h1>Lista de Usuários</h1>
+            <h1>Lista de Categorias</h1>
             <img src="../img/ornamento-informatica.png" alt="Ornamento" class="ornamento">
         </section>
 
@@ -108,43 +108,23 @@ function pode(string $perm) {
             <table border="1">
                 <tr class="header-row">
                     <th>
-                        <a href="<?= gerarUrlOrdenacao('id', $pagina_atual, $ordem, $direcao, $itens_por_pagina) ?>" style="color: inherit; text-decoration: none;">
-                            Código <?= mostrarIconeOrdenacao('id', $ordem, $direcao) ?>
+                        <a href="<?= gerarUrlOrdenacao('categoria', $pagina_atual, $ordem, $direcao, $itens_por_pagina) ?>" style="color: inherit; text-decoration: none;">
+                            Categoria <?= mostrarIconeOrdenacao('categoria', $ordem, $direcao) ?>
                         </a>
                     </th>
-                    <th>
-                        <a href="<?= gerarUrlOrdenacao('nome', $pagina_atual, $ordem, $direcao, $itens_por_pagina) ?>" style="color: inherit; text-decoration: none;">
-                            Nome <?= mostrarIconeOrdenacao('nome', $ordem, $direcao) ?>
-                        </a>
-                    </th>
-                    <th>
-                        <a href="<?= gerarUrlOrdenacao('email', $pagina_atual, $ordem, $direcao, $itens_por_pagina) ?>" style="color: inherit; text-decoration: none;">
-                            Email <?= mostrarIconeOrdenacao('email', $ordem, $direcao) ?>
-                        </a>
-                    </th>
-                    <th>
-                        <a href="<?= gerarUrlOrdenacao('cpf', $pagina_atual, $ordem, $direcao, $itens_por_pagina) ?>" style="color: inherit; text-decoration: none;">
-                            Cpf <?= mostrarIconeOrdenacao('cpf', $ordem, $direcao) ?>
-                        </a>
-                    </th>
-                    <th>Perfil</th>
                     <th colspan=2>Ações</th>
                 </tr>
-                <?php foreach ($usuarios as $usuario): ?>
+                <?php foreach ($categorias as $categoria): ?>                    
                     <tr>
-                        <td><?= $usuario->getId() ?></td>
-                        <td><?= $usuario->getNome() ?></td>
-                        <td><?= $usuario->getEmail() ?></td>
-                        <td><?= $usuario->getCpf() ?></td>
-                        <td><?= $usuario->getPerfil() ?></td>
+                        <td><?= $categoria->getNome() ?></td>
                         <td>
-                            <form action="form.php?id=<?= $usuario->getId() ?>" method="POST">                            
+                            <form action="form.php?id=<?= $categoria->getId() ?>" method="POST">                            
                                 <input type="submit" value="Editar" class="botao-editar">
                             </form>
                         </td>
                         <td>
-                            <form action="excluir.php" method="POST" onsubmit='return confirmarExclusao(<?= json_encode($usuario->getNome()) ?>)'>
-                                <input type="hidden" name="usuarioId" id="usuarioId" value="<?= $usuario->getId() ?>" class="id-box">
+                            <form action="excluir.php" method="POST" onsubmit='return confirmarExclusao(<?= json_encode($categoria->getNome()) ?>)'>
+                                <input type="hidden" name="categoriaId" id="categoriaId" value="<?= $categoria->getId() ?>" class="id-box">                                
                                 <input type="submit" value="Excluir" class="botao-excluir">
                             </form>
                         </td>
@@ -172,16 +152,13 @@ function pode(string $perm) {
                 <?php endif; ?>
             </div>
 
-            <a href="form.php" class="link-cadastrar">Cadastrar Usuário</a>
-            <form action="gerador-pdf.php">
-                <button type="submit" class="botao-relatorio">Baixar relatório</button>
-            </form>       
+            <a href="form.php" class="link-cadastrar">Cadastrar Categorias</a>    
         </section>
     </main>
 
 <script>
-    function confirmarExclusao(nome) {
-        return window.confirm("Confirmar a exclusão do usuário '" + nome + "'?");
+    function confirmarExclusao(nome) {        
+        return window.confirm("Deseja confirmar a exclusão da categoria '" + nome + "'?");
     }
 </script>
 </body>

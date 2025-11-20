@@ -13,22 +13,22 @@ if (!$usuarioLogado) {
 }
 
 require_once __DIR__ . '/../src/conexao-bd.php';
-require_once __DIR__ . '/../src/Modelos/Usuario.php';
-require_once __DIR__ . '/../src/Repositorios/UsuarioRepositorio.php';
+require_once __DIR__ . '/../src/Modelos/Categoria.php';
+require_once __DIR__ . '/../src/Repositorios/CategoriaRepositorio.php';
 
-$repo = new UsuarioRepositorio($pdo);
+$repo = new CategoriaRepositorio($pdo);
 
 $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
 $modoEdicao = false;
-$usuario = null;
+$categoria = null;
 
 if ($id) {
 
     if (method_exists($repo, 'buscarPorId')) {
-        $usuario = $repo->buscarPorId($id);
+        $categoria = $repo->buscarPorId($id);
     }
 
-    if ($usuario) {
+    if ($categoria) {
         $modoEdicao = true;
     }
     else {
@@ -38,13 +38,10 @@ if ($id) {
 
 }
 
-$nome = $modoEdicao ? $usuario->getNome() : '';
-$email = $modoEdicao ? $usuario->getEmail() : '';
-$cpf = $modoEdicao ? $usuario->getCpf() : '';
-$perfil = $modoEdicao ? $usuario->getPerfil() : 'User';
+$nome = $modoEdicao ? $categoria->getNome() : '';
 
-$tituloPagina = $modoEdicao ? 'Perfil' : 'Sign-in';
-$textoBotao = $modoEdicao ? 'Salvar' : 'Registrar';
+$tituloPagina = $modoEdicao ? 'Editar Categoria' : 'Cadastrar Categoria';
+$textoBotao = $modoEdicao ? 'Salvar' : 'Cadastrar';
 
 $registrado = $_GET['registrado'] ?? '';
 ?>
@@ -70,10 +67,8 @@ $registrado = $_GET['registrado'] ?? '';
             <h2><?= htmlspecialchars($tituloPagina) ?></h2>
             <div class="form-wrapper">
                 <?php if (isset($_GET['erro'])): ?>
-                    <?php if ($_GET['erro'] === "emailexistente"): ?>
-                        <p class="mensagem-erro">Usuário já existente com este e-mail.</p>
-                    <?php elseif ($_GET['erro'] === "cpfexistente"): ?>
-                        <p class="mensagem-erro">Usuário já existente com este CPF.</p>
+                    <?php if ($_GET['erro'] === "categoriaexistente"): ?>
+                        <p class="mensagem-erro">Categoria já existente com este nome.</p>
                     <?php elseif ($_GET['erro'] === "campos"): ?>
                         <p class="mensagem-erro">Preencha todos os campos.</p>
                     <?php endif; ?>
@@ -81,23 +76,13 @@ $registrado = $_GET['registrado'] ?? '';
 
                 <form action="salvar.php" method="post">
                     <?php if ($modoEdicao): ?>
-                        <input type="hidden" name="id" value="<?= (int)$usuario->getId() ?>">
+                        <input type="hidden" name="id" value="<?= (int)$categoria->getId() ?>">
                     <?php endif; ?>
 
                     <input type="text" name="nome" id="nome" placeholder="Nome" value="<?= htmlspecialchars($nome) ?>" required>
-                    <input type="email" name="email" id="email" placeholder="E-mail" value="<?= htmlspecialchars($email) ?>" required>
-                    <input type="text" name="cpf" id="cpf" placeholder="CPF" value="<?= htmlspecialchars($cpf) ?>" required>
-                    
-                    <select id="perfil">
-                        <option value="User" <?= $perfil === 'User' ? 'selected' : '' ?>>User</option>
-                        <option value="Admin" <?= $perfil === 'Admin' ? 'selected' : '' ?>>Admin</option>
-                    </select>
-
-                    <input type="password" name="senha" id="senha" placeholder="Senha" value="" required>
 
                     <input type="submit" class="botao-cadastrar" value="<?= htmlspecialchars($textoBotao) ?>">
                 </form>
-
                 
                 <a href="listar.php" class="botao-voltar">Voltar</a>
                 
