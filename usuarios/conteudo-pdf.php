@@ -24,6 +24,7 @@ body {
 }
 
 table {
+    width: 70%;
     margin: 15px auto;
     color: black;
     border-radius: 10px;
@@ -58,6 +59,8 @@ table th, table td {
             <th>E-mail</th>
             <th>CPF</th>
             <th>Perfil</th>
+            <th>Criado em</th>
+            <th>Última Atualização</th>
         </tr>
     </thead>
     <tbody>
@@ -67,6 +70,8 @@ table th, table td {
                 <td><?= $usuario->getEmail() ?></td>
                 <td><?= $usuario->getCpf() ?></td>
                 <td><?= $usuario->getPerfil() ?></td>
+                <td><?= $usuario->getCreatedAt()->format('d/m/Y H:i:s') ?></td>
+                <td><?= $usuario->getUpdatedAt()->format('d/m/Y H:i:s') ?></td>
             </tr>
         <?php endforeach; ?>
     </tbody>

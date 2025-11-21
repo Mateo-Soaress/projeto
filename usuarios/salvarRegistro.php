@@ -31,7 +31,7 @@
         exit;
     }
 
-    $usuario = new Usuario(0, $nome, $email, $cpf, $senha);
+    $usuario = new Usuario(0, $nome, $email, $cpf, 'User', $senha, new DateTime(), new DateTime());
     $repo->salvar($usuario);
     header('Location: ../login.php?registrado=true');
     exit;

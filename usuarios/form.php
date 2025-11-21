@@ -43,8 +43,8 @@ $email = $modoEdicao ? $usuario->getEmail() : '';
 $cpf = $modoEdicao ? $usuario->getCpf() : '';
 $perfil = $modoEdicao ? $usuario->getPerfil() : 'User';
 
-$tituloPagina = $modoEdicao ? 'Perfil' : 'Sign-in';
-$textoBotao = $modoEdicao ? 'Salvar' : 'Registrar';
+$tituloPagina = $modoEdicao ? 'Perfil' : 'Cadastrar';
+$textoBotao = $modoEdicao ? 'Salvar' : 'Cadastrar';
 
 $registrado = $_GET['registrado'] ?? '';
 ?>

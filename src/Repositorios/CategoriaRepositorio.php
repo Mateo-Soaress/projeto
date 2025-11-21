@@ -14,7 +14,7 @@
 
         public function buscarPaginado(int $limite, int $offset, ?string $ordem = null, ?string $direcao = 'ASC'): array 
         {
-            $colunasPermitidas = ['categoria'];
+            $colunasPermitidas = ['nome'];
 
             $sql = "SELECT * FROM categorias";
 

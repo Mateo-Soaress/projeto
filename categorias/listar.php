@@ -108,8 +108,8 @@ function pode(string $perm) {
             <table border="1">
                 <tr class="header-row">
                     <th>
-                        <a href="<?= gerarUrlOrdenacao('categoria', $pagina_atual, $ordem, $direcao, $itens_por_pagina) ?>" style="color: inherit; text-decoration: none;">
-                            Categoria <?= mostrarIconeOrdenacao('categoria', $ordem, $direcao) ?>
+                        <a href="<?= gerarUrlOrdenacao('nome', $pagina_atual, $ordem, $direcao, $itens_por_pagina) ?>" style="color: inherit; text-decoration: none;">
+                            Categoria <?= mostrarIconeOrdenacao('nome', $ordem, $direcao) ?>
                         </a>
                     </th>
                     <th colspan=2>Ações</th>
@@ -135,19 +135,19 @@ function pode(string $perm) {
             <div class="paginacao">
                 <?php if ($total_paginas > 1): ?>
                     <?php if ($pagina_atual > 1): ?>
-                        <a href="?pagina=<?=$pagina_atual - 1?>&ordem=<?=htmlspecialchars($ordem)?>&direcao=<?=htmlspecialchars($direcao)?>$itens_por_pagina=<?=htmlspecialchars($itens_por_pagina)?>">Anterior</a>
+                        <a href="?pagina=<?=$pagina_atual - 1?>&ordem=<?=htmlspecialchars($ordem)?>&direcao=<?=htmlspecialchars($direcao)?>&itens_por_pagina=<?=htmlspecialchars($itens_por_pagina)?>">Anterior</a>
                     <?php endif; ?>
 
                     <?php for ($i = 1; $i <= $total_paginas; $i++): ?>
                         <?php if ($i === $pagina_atual): ?>
                             <strong><?= $i ?></strong>
                         <?php else: ?>
-                            <a href="?pagina=<?=$i?>&ordem=<?=htmlspecialchars($ordem)?>&direcao=<?=htmlspecialchars($direcao)?>$itens_por_pagina=<?=htmlspecialchars($itens_por_pagina)?>"><?= $i ?></a>
+                            <a href="?pagina=<?=$i?>&ordem=<?=htmlspecialchars($ordem)?>&direcao=<?=htmlspecialchars($direcao)?>&itens_por_pagina=<?=htmlspecialchars($itens_por_pagina)?>"><?= $i ?></a>
                         <?php endif; ?>
                     <?php endfor; ?>
 
                     <?php if ($pagina_atual < $total_paginas): ?>
-                        <a href="?pagina=<?=$pagina_atual + 1?>&ordem=<?=htmlspecialchars($ordem)?>&direcao=<?=htmlspecialchars($direcao)?>$itens_por_pagina=<?=htmlspecialchars($itens_por_pagina)?>">Próximo</a>
+                        <a href="?pagina=<?=$pagina_atual + 1?>&ordem=<?=htmlspecialchars($ordem)?>&direcao=<?=htmlspecialchars($direcao)?>&itens_por_pagina=<?=htmlspecialchars($itens_por_pagina)?>">Próximo</a>
                     <?php endif; ?>
                 <?php endif; ?>
             </div>

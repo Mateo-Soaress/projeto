@@ -38,7 +38,7 @@
             $senhaParaObjeto = $senha;
         }
 
-        $usuario = new Usuario($id, $nome, $email, $cpf, $perfil, $senha);
+        $usuario = new Usuario($id, $nome, $email, $cpf, $perfil, $senha, $existente->getCreatedAt(), $existente->getUpdatedAt());
         $repo->atualizar($usuario);
         header('Location: listar.php');
         exit;
@@ -54,13 +54,13 @@
             exit;
         }
 
-        $usuario = new Usuario(0, $nome, $email, $cpf, $perfil, $senha);
+        $usuario = new Usuario(0, $nome, $email, $cpf, $perfil, $senha, new DateTime(), new DateTime());
         $repo->salvar($usuario);
         header('Location: listar.php');
         exit;
     }
 
-    $usuario = new Usuario(0, $nome, $email, $cpf, $perfil, $senha);
+    $usuario = new Usuario(0, $nome, $email, $cpf, $perfil, $senha, new DateTime(), new DateTime());
     $repo->salvar($usuario);
     header('Location: listar.php');
     exit;

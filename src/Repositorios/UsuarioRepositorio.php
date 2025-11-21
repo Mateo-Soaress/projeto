@@ -10,10 +10,11 @@
 
         public function formarObjeto(array $dados): Usuario
         {
-            return new Usuario($dados['id'], $dados['nome'], $dados['email'], $dados['cpf'], $dados['perfil'], $dados['senha']);
+            return new Usuario($dados['id'], $dados['nome'], $dados['email'], $dados['cpf'], $dados['perfil'], $dados['senha'], new DateTime($dados['created_at']), new DateTime($dados['updated_at']));
         }
+
         public function buscarPorId(int $id): ?Usuario {
-            $sql = "SELECT id, nome, email, cpf, perfil, senha FROM usuarios WHERE id = :id";
+            $sql = "SELECT id, nome, email, cpf, perfil, senha, created_at, updated_at FROM usuarios WHERE id = :id";
             $stmt = $this->pdo->prepare($sql);
             $stmt->bindValue(":id", $id);
             $stmt->execute();
@@ -23,7 +24,7 @@
 
         public function buscarPorCpf(string $cpf): ?Usuario
         {
-            $sql = "SELECT id, nome, email, cpf, perfil, senha FROM usuarios WHERE cpf = :cpf";
+            $sql = "SELECT id, nome, email, cpf, perfil, senha, created_at, updated_at FROM usuarios WHERE cpf = :cpf";
             $stmt = $this->pdo->prepare($sql);
             $stmt->bindValue(":cpf", $cpf);
             $stmt->execute();
@@ -33,7 +34,7 @@
 
         public function buscarPorEmail(string $email): ?Usuario
         {
-            $sql = "SELECT id, nome, email, cpf, perfil, senha FROM usuarios WHERE email = :email";
+            $sql = "SELECT id, nome, email, cpf, perfil, senha, created_at, updated_at FROM usuarios WHERE email = :email";
             $stmt = $this->pdo->prepare($sql);
             $stmt->bindValue(":email", $email);
             $stmt->execute();
@@ -41,22 +42,31 @@
             return $dados ? $this->formarObjeto($dados): null;
         }
 
-        public function buscarPaginado(int $limite, int $offset, ?string $ordem = null, ?string $direcao = 'ASC'): array 
+        public function buscarPaginado(int $limite, int $offset, ?string $ordem = null, ?string $direcao = 'ASC', ?string $filtroNome = null): array 
         {
             $colunasPermitidas = ['id', 'nome', 'email', 'cpf'];
 
             $sql = "SELECT * FROM usuarios";
+
+            if ($filtroNome) {
+                $sql .= " WHERE nome LIKE CONCAT('%', :nome, '%')";
+            }
 
             if ($ordem !== null && in_array(strtolower($ordem), $colunasPermitidas)) {
                 $direcao = strtoupper($direcao) == 'DESC' ? 'DESC' : 'ASC';
                 $sql .= " ORDER BY {$ordem} {$direcao}";
             }
 
-            $sql .= " LIMIT ? OFFSET ?";
+            $sql .= " LIMIT :limit OFFSET :offset";
 
             $stmt = $this->pdo->prepare($sql);
-            $stmt->bindValue(1, $limite, PDO::PARAM_INT);
-            $stmt->bindValue(2, $offset, PDO::PARAM_INT);
+            $stmt->bindValue("limit", $limite, PDO::PARAM_INT);
+            $stmt->bindValue("offset", $offset, PDO::PARAM_INT);
+
+            if ($filtroNome) {
+                $stmt->bindValue("nome", $filtroNome, PDO::PARAM_STR);
+            }
+
             $stmt->execute();
 
             $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -101,7 +111,7 @@
         }
 
         public function listar(): array {
-            $sql = "SELECT  id, nome, email, cpf, perfil, senha FROM usuarios ORDER BY id";
+            $sql = "SELECT  id, nome, email, cpf, perfil, senha, created_at, updated_at FROM usuarios ORDER BY id";
             $rs = $this->pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
             return array_map(fn($r) => $this->formarObjeto($r), $rs);
         }
@@ -118,6 +128,19 @@
             $sql = "SELECT COUNT(*) AS total FROM usuarios";
             $stmt = $this->pdo->query($sql);
             $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
+            return (int) $resultado['total'];
+        }
+
+        public function contarTotalFiltrado(string $nome): int {
+            $sql = "SELECT COUNT(*) AS total FROM usuarios WHERE nome LIKE CONCAT('%', :nome, '%')";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->bindValue("nome", $nome, PDO::PARAM_STR);
+            $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
+            
+            if (!$resultado) {
+                return 0;
+            }
+            
             return (int) $resultado['total'];
         }
     }
