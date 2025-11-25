@@ -1,11 +1,39 @@
 <?php
 
+session_start();
+
+if (!isset($_SESSION['usuario'])) {
+    session_abort();
+    $usuarioLogado = null;
+}
+else {
+    $usuarioLogado = $_SESSION['usuario'];
+}
+
 require "src/conexao-bd.php";
 require "src/Modelos/Produto.php";
 require "src/Repositorios/ProdutoRepositorio.php";
+require "src/Modelos/Usuario.php";
+require "src/Repositorios/UsuarioRepositorio.php";
 
 $produtosRepositorio = new ProdutoRepositorio($pdo);
-$dadosProdutos = $produtosRepositorio->produtos();
+
+$filtroNome = trim(filter_input(INPUT_GET, 'barra-pesquisa')) ?: null;
+
+if ($filtroNome) {   
+    $dadosProdutos = $produtosRepositorio->listarComFiltro($filtroNome); 
+} else {    
+    $dadosProdutos = $produtosRepositorio->produtos();
+}
+
+if ($usuarioLogado) {
+    $usuarioRepositorio = new UsuarioRepositorio($pdo);
+    $usuario = $usuarioRepositorio->buscarPorEmail($usuarioLogado);
+    $id = $usuario ? $usuario->getId() : null;
+}
+else {
+    $id = null;
+}
 
 ?>
 
@@ -29,14 +57,14 @@ $dadosProdutos = $produtosRepositorio->produtos();
         <section class="container-header">
             <img class="logo-loja" src="img/loja-logo-sem-fundo.png" alt="Logo da Loja MateoRonan">
 
-            <form class="pesquisa-form" action="" method="POST">
-                <input type="text" name="barra-pesquisa" id="barra-pesquisa">
+            <form class="pesquisa-form" action="" method="GET">
+                <input type="text" name="barra-pesquisa" id="barra-pesquisa" value="<?= htmlspecialchars($filtroNome) ?>">
 
                 <button class="botao-pesquisar" type="submit"><img src="img/lupa.png" alt="Botão de Pesquisar"></button>
             </form>
 
             <div class="perfil-box">
-                <a href="editarPerfil"><img src="img/perfil.png" alt="Imagem do Perfil"></a>
+                <a href="usuarios/form.php?id=<?= $id ?>"><img src="img/perfil.png" alt="Imagem do Perfil"></a>
                 <p>Perfil</p>
             </div>
         </section>
@@ -66,6 +94,11 @@ $dadosProdutos = $produtosRepositorio->produtos();
             <img src="img/logo-loja.png" alt="">
         </section>
     </main>
+<script>
+    function confirmarExclusao(nome) {
+        return window.confirm("Confirmar a exclusão do usuário '" + nome + "'?");
+    }
+</script>
 </body>
 
 </html>

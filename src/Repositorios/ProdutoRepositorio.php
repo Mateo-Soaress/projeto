@@ -14,22 +14,31 @@
             return new Produto($dados['id'], $dados['nome'], $dados['descricao'], $dados['preco'], $dados['categoria_id'], $dados['imagem']);
         }
 
-        public function buscarPaginado(int $limite, int $offset, ?string $ordem = null, ?string $direcao = 'ASC'): array 
+        public function buscarPaginado(int $limite, int $offset, ?string $ordem = null, ?string $direcao = 'ASC', ?string $filtroNome = null): array 
         {
             $colunasPermitidas = ['id', 'nome', 'preco'];
 
             $sql = "SELECT * FROM produtos";
+
+            if ($filtroNome) {
+                $sql .= " WHERE nome LIKE CONCAT('%', :nome, '%')";
+            }
 
             if ($ordem !== null && in_array(strtolower($ordem), $colunasPermitidas)) {
                 $direcao = strtoupper($direcao) == 'DESC' ? 'DESC' : 'ASC';
                 $sql .= " ORDER BY {$ordem} {$direcao}";
             }
 
-            $sql .= " LIMIT ? OFFSET ?";
+            $sql .= " LIMIT :limit OFFSET :offset";
 
-            $stmt = $this->pdo->prepare($sql);
-            $stmt->bindValue(1, $limite, PDO::PARAM_INT);
-            $stmt->bindValue(2, $offset, PDO::PARAM_INT);
+            $stmt = $this->pdo->prepare($sql);            
+            $stmt->bindValue("limit", $limite, PDO::PARAM_INT);
+            $stmt->bindValue("offset", $offset, PDO::PARAM_INT);
+
+            if ($filtroNome) {
+                $stmt->bindValue("nome", $filtroNome, PDO::PARAM_STR);
+            }
+
             $stmt->execute();
 
             $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -76,6 +85,19 @@
             $dados = $stmt->fetch();
 
             return $dados ? $this->formarObjeto($dados): null;
+        }
+
+         public function listarComFiltro(string $filtroNome): array 
+        {
+            $sql = "SELECT id, nome, descricao, preco, categoria_id, imagem FROM produtos WHERE nome LIKE CONCAT('%', :nome, '%')";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->bindValue("nome", $filtroNome, PDO::PARAM_STR);
+            $stmt->execute();
+            $produtos = [];
+            while ($row = $stmt->fetch()) {
+                $produtos[] = $this->formarObjeto($row);
+            }
+            return $produtos;
         }
 
         public function salvar(Produto $produto): void 

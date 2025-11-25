@@ -37,7 +37,7 @@
         }
 
         public function getImagemDiretorio(): string {
-            $uploadsPath = __DIR__ . '/../uploads/';
+            $uploadsPath = __DIR__ . '/../../uploads/';
 
             if ($this->imagem && file_exists($uploadsPath . $this->imagem)) {
                 return 'uploads/' . $this->imagem;

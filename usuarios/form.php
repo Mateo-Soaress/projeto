@@ -46,6 +46,8 @@ $perfil = $modoEdicao ? $usuario->getPerfil() : 'User';
 $tituloPagina = $modoEdicao ? 'Perfil' : 'Cadastrar';
 $textoBotao = $modoEdicao ? 'Salvar' : 'Cadastrar';
 
+// $paginaAnterior = $_GET['pagina_anterior'] :: 'listar.php';
+
 $registrado = $_GET['registrado'] ?? '';
 ?>
 

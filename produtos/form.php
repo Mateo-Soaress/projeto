@@ -88,7 +88,7 @@ $registrado = $_GET['registrado'] ?? '';
                     <?php endif; ?>
                 <?php endif; ?>
 
-                <form action="salvar.php" method="post">
+                <form action="salvar.php" method="post" enctype="multipart/form-data">
                     <?php if ($modoEdicao): ?>
                         <input type="hidden" name="id" value="<?= (int)$produto->getId() ?>">
                     <?php endif; ?>

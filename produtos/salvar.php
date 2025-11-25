@@ -28,11 +28,11 @@
         $uploadsDir = __DIR__ . '/../uploads/';
         if (!is_dir($uploadsDir)) {
             mkdir($uploadsDir, 0755, true);
-        }
+        }        
 
         if (isset($_FILES['imagem']) && $_FILES['imagem']['error'] === UPLOAD_ERR_OK) {
             $tmpPath = $_FILES['imagem']['tmp_name'];
-            
+
             $imgInfo = @getimagesize($tmpPath);
             if ($imgInfo !== false) {
                 

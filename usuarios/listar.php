@@ -105,7 +105,7 @@ function pode(string $perm) {
         </section>
 
         <form class="filtro-form" action="" method="GET">
-            <input type="text" name="filtro_nome" id="barra-pesquisa">
+            <input type="text" name="filtro_nome" id="barra-pesquisa" value="<?= htmlspecialchars($filtroNome) ?>">
 
             <button class="botao-pesquisar" type="submit"><img src="../img/lupa.png" alt="Botão de Pesquisar"></button>
         </form>

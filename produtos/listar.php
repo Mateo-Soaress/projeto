@@ -91,9 +91,9 @@ function pode(string $perm) {
             <div class="item-menu">
                 <a href="../produtos/listar.php">Produtos</a>
             </div>
-            <?php if (pode('produtos.listar')): ?>
+            <?php if (pode('usuarios.listar')): ?>
                 <div class="item-menu">
-                    <a href="../produtos/listar.php">Usuários</a>
+                    <a href="../usuarios/listar.php">Usuários</a>
                 </div>
             <?php endif; ?>
             <div class="item-menu">
@@ -108,7 +108,7 @@ function pode(string $perm) {
         </section>
 
         <form class="filtro-form" action="" method="GET">
-            <input type="text" name="filtro_nome" id="barra-pesquisa">
+            <input type="text" name="filtro_nome" id="barra-pesquisa" value="<?= htmlspecialchars($filtroNome) ?>">
 
             <button class="botao-pesquisar" type="submit"><img src="../img/lupa.png" alt="Botão de Pesquisar"></button>
         </form>
