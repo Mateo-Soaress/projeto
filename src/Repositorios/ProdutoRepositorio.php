@@ -14,6 +14,34 @@
             return new Produto($dados['id'], $dados['nome'], $dados['descricao'], $dados['preco'], $dados['categoria_id'], $dados['imagem']);
         }
 
+        public function buscarPaginado(int $limite, int $offset, ?string $ordem = null, ?string $direcao = 'ASC'): array 
+        {
+            $colunasPermitidas = ['id', 'nome', 'preco'];
+
+            $sql = "SELECT * FROM produtos";
+
+            if ($ordem !== null && in_array(strtolower($ordem), $colunasPermitidas)) {
+                $direcao = strtoupper($direcao) == 'DESC' ? 'DESC' : 'ASC';
+                $sql .= " ORDER BY {$ordem} {$direcao}";
+            }
+
+            $sql .= " LIMIT ? OFFSET ?";
+
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->bindValue(1, $limite, PDO::PARAM_INT);
+            $stmt->bindValue(2, $offset, PDO::PARAM_INT);
+            $stmt->execute();
+
+            $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $listaProdutos = [];
+
+            foreach ($produtos as $produto) {
+                $listaProdutos[] = $this->formarObjeto($produto);
+            }
+
+            return $listaProdutos;
+        }
+
         public function listar(): array 
         {
             $sql = "SELECT id, nome, descricao, preco, categoria_id, imagem FROM produtos";
@@ -81,6 +109,26 @@
             $stmt = $this->pdo->prepare($sql);
             $stmt->bindValue(':id', $produto->getId());
             $stmt->execute();
+        }
+
+        public function contarTotal(): int {
+            $sql = "SELECT COUNT(*) AS total FROM produtos";
+            $stmt = $this->pdo->query($sql);
+            $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
+            return (int) $resultado['total'];
+        }
+
+        public function contarTotalFiltrado(string $nome): int {
+            $sql = "SELECT COUNT(*) AS total FROM produtos WHERE nome LIKE CONCAT('%', :nome, '%')";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->bindValue("nome", $nome, PDO::PARAM_STR);
+            $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
+            
+            if (!$resultado) {
+                return 0;
+            }
+            
+            return (int) $resultado['total'];
         }
 
     }

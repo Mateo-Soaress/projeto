@@ -16,7 +16,7 @@
             $this->imagem = $imagem ?? 'loja-logo.png';
         }
 
-        public function getId(): int {
+        public function getId(): ?int {
             return $this->id;
         }
 
