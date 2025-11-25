@@ -6,7 +6,8 @@ if (!isset($_SESSION['usuario'])) {
     exit;
 }
 
-$produtoId = $_POST['produtoId'] ?? 0;
+// $produtoId = $_POST['produtoId'] ?? 0;
+$produtoId = 10;
 $usuarioLogado = $_SESSION['usuario'] ?? '';
 $erro = $_GET['erro'] ?? '';
 
@@ -20,6 +21,8 @@ $repoCategoria = new CategoriaRepositorio($pdo);
 $repoProduto = new ProdutoRepositorio($pdo);
 
 $produto = $repoProduto->buscarPorId($produtoId);
+
+$valorImagem = $produto->getImagem();
 ?>
 
 <!DOCTYPE html>
@@ -56,6 +59,14 @@ $produto = $repoProduto->buscarPorId($produtoId);
                             </option>
                         <?php endforeach; ?>
                     </select>
+                    <input type="file" name="imagem" id="imagem" accept="image/*">
+                    <?php if (!empty($valorImagem)): ?>
+                        <div class="preview-imagem">
+                            <p>Imagem atual: <?= htmlspecialchars($valorImagem) ?></p>
+                            <img src="<?= htmlspecialchars('../uploads/' . $valorImagem) ?>" alt="Imagem do produto" style="max-width:200px;display:block;margin-top:8px;">
+                            <input type="hidden" name="imagem_existente" value="<?= htmlspecialchars($valorImagem) ?>">
+                        </div>
+                    <?php endif; ?>
                     <button type="submit" class="botao-editar">Editar</button>
                 </form>
                 <a href="admin.php" class="botao-voltar">Voltar</a>

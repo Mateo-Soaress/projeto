@@ -26,6 +26,47 @@ if ($nome === '' || $descricao === '' || $preco === '' || $categoria === '') {
 
 $categoriaId = $repoCategoria->buscarPorNome($categoria)->getId() ?? 0;
 
+$produto = new Produto(0, $nome, $descricao, (float)$preco, $categoriaId);
+
+$uploadsDir = __DIR__ . '/../uploads/';
+if (!is_dir($uploadsDir)) {
+    mkdir($uploadsDir, 0755, true);
+}
+
+if (isset($_FILES['imagem']) && $_FILES['imagem']['error'] === UPLOAD_ERR_OK) {
+    $tmpPath = $_FILES['imagem']['tmp_name'];
+    
+    $imgInfo = @getimagesize($tmpPath);
+    if ($imgInfo !== false) {            
+        $mime = $imgInfo['mime'];
+        $ext = '';
+        
+        switch ($mime) {
+            case 'image/jpeg':
+                $ext = '.jpg';
+                break;
+            case 'image/png':
+                $ext = '.png';
+                break;
+            case 'image/gif':
+                $ext = '.gif';
+                break;
+            default:
+                $ext = image_type_to_extension($imgInfo[2]) ?: '';
+        }
+        
+        $filename = uniqid('img_', true) . $ext;
+        $destination = $uploadsDir . $filename;
+
+        if (move_uploaded_file($tmpPath, $destination)) {
+            $produto->setImagem($filename);
+        }
+    }
+} elseif (!empty($_POST['imagem_existente'])) {    
+    $produto->setImagem($_POST['imagem_existente']);
+} else {    
+    $produto->setImagem('loja-logo.png');
+}
 
 $repoProduto = new ProdutoRepositorio($pdo);
 
